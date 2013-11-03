@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= config.application.name%></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="Stylesheet" href="css/style.css" type="text/css" />
+		<script src="js/jquery.js"></script>
+		<script src="//code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+
+	<body>
+
+		<div data-role="page" data-theme="a">
+			<div data-role="header">
+				<h1><%= config.application.name%></h1>
+				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
+			</div>
+			<div data-role="content">
+				<div data-role="content">
+					<form id="searchYouTube">
+						<div data-role="fieldcontain">
+							<input name="q" placeholder="Search YouTube" value="" type="search" />
+						</div>
+					</form>
+				</div>
+			</div>
+			<div data-role="panel" id="left-panel">
+				<ul data-role="listview">
+					<li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+					<li data-role="list-divider">Menu</li>
+					<li data-icon="back"><a href="#demo-intro" data-rel="back">Demo intro</a></li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			var socket = io.connect();
+			$('#searchYouTube').submit(function(event){
+				var search_query = $(this).find('input[name="q"]').val();
+				if(search_query != ""){
+					socket.emit('search', {query: search_query});
+				}
+				event.stopPropagation();
+				event.preventDefault();
+			});
+			socket.on('youtube-search-results', function(data){
+				console.log(data);
+			});
+		</script>
+	</body>
+</html>

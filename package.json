@@ -1,0 +1,20 @@
+{
+  "name": "jukebox",
+  "version": "0.0.0",
+  "description": "A youtube powered jukebox",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "socket.io": "latest",
+    "express": "latest",
+    "just": "latest",
+    "consolidate": "latest",
+    "ip": "latest",
+    "youtube-api": "latest"
+  },
+  "repository": "https://github.com/robertmain/jukebox",
+  "author": "Robert Main",
+  "license": "BSD"
+}

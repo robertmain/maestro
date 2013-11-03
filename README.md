@@ -1,4 +1,4 @@
-jukebox
+Jukebox
 =======
 
-A nodeJS youtube jukebox
+A nodeJS youtube jukebox application. Great for parties and stuff :-)

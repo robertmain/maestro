@@ -1,0 +1,15 @@
+.rounded{
+	border-radius: 0.3rem;
+}
+
+.white{
+	background-color: #FFF;
+}
+
+.padding{
+	padding: 1rem;
+}
+
+.squarify{
+	border-radius: 0px;
+}
