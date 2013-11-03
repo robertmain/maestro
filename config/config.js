@@ -8,7 +8,7 @@ self.directories = {
 
 self.webserver = {
 	"ip": "0.0.0.0",
-	"port": process.argv[2] || "8000"
+	"port": parseInt(process.argv[2]) || "8000"
 };
 
 self.application = {
