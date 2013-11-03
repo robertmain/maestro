@@ -12,7 +12,7 @@
     "just": "latest",
     "consolidate": "latest",
     "ip": "latest",
-    "passport-youtube": "latest"
+    "youtube-feeds": "latest"
   },
   "repository": "https://github.com/robertmain/jukebox",
   "author": "Robert Main",

@@ -7,7 +7,8 @@ var express = require('express')
 	, cons = require('consolidate')
 	, app = express()
 	, server = require('http').createServer(app)
-	, io = require('socket.io').listen(server);
+	, io = require('socket.io').listen(server)
+	, youtube = require('youtube-feeds');
 
 /**
 * Global vars
@@ -21,7 +22,9 @@ var clients = [];
 io.sockets.on('connection', function(socket){
 	clients.push(socket);
 	socket.on('search', function(data){
-		console.log(data);
+		youtube.feeds.videos({q: data.search_query}, function(err, response){
+			socket.emit('youtube-search-results', response);
+		});
 	});
 	socket.on('test-connection', function(data){
 		console.log("Success!");

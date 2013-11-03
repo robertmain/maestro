@@ -13,8 +13,5 @@ self.webserver = {
 
 self.application = {
 	name: "Node Jukebox",
-	slogan: "Use youtube as a JukeBox!",
-	youtube: {
-		
-	}
+	slogan: "Use youtube as a JukeBox!"
 };
