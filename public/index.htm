@@ -14,22 +14,23 @@
 		<div data-role="page" data-theme="a">
 			<div data-role="header">
 				<h1><%= config.application.name%></h1>
-				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
+				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"></a>
 			</div>
 			<div data-role="content">
 				<div data-role="content">
-					<form id="searchYouTube">
-						<div data-role="fieldcontain">
-							<input name="q" placeholder="Search YouTube" value="" type="search" />
-						</div>
-					</form>
+					
 				</div>
 			</div>
-			<div data-role="panel" id="left-panel">
+			<div data-role="panel" id="left-panel" data-theme="a" data-display="overlay">
 				<ul data-role="listview">
-					<li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
 					<li data-role="list-divider">Menu</li>
-					<li data-icon="back"><a href="#demo-intro" data-rel="back">Demo intro</a></li>
+					<li>
+						<form id="searchYouTube">
+							<input name="q" placeholder="Search YouTube" value="" type="search" />							
+						</form>
+					</li>
+					<li><a href="#" data-rel="">Playlist</a></li>
+					<li><a href="#" data-rel="">Now Playing</a></li>
 				</ul>
 			</div>
 		</div>
@@ -39,12 +40,30 @@
 				var search_query = $(this).find('input[name="q"]').val();
 				if(search_query != ""){
 					socket.emit('search', {query: search_query});
+					$('#left-panel').panel('close');
+					var $this = $(document),
+						theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+						msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+						textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+						textonly = !!$this.jqmData( "textonly" );
+						html = $this.jqmData( "html" ) || "";
+					$.mobile.loading( "show", {
+						text: msgText,
+						textVisible: textVisible,
+						theme: theme,
+						textonly: textonly,
+						html: html
+					});
 				}
 				event.stopPropagation();
 				event.preventDefault();
 			});
 			socket.on('youtube-search-results', function(data){
 				console.log(data);
+				$(document).mobile.loading("hide");
+			});
+			socket.on('disconnection', function(data){
+				console.log("Client Disconnected!", data);
 			});
 		</script>
 	</body>

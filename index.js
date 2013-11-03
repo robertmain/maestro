@@ -22,12 +22,13 @@ io.sockets.on('connection', function(socket){
 	clients.push(socket);
 	socket.on('search', function(data){
 		console.log(data);
-	});	
+	});
 	socket.on('test-connection', function(data){
 		console.log("Success!");
 		socket.emit('result', {result: "success!"});
-	})
+	});
 	socket.on('disconnect', function(){
+		io.sockets.emit('disconnection');
 		clients.splice(clients.indexOf(socket), 1);
 	});
 });
