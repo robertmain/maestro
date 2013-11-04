@@ -1,3 +1,20 @@
 @import '//code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css';
 @import '//code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css';
 @import 'util.css';
+
+.video{
+	color: #575757;
+	background-color: #FFF;
+	margin: 0px 0px 1rem 0px;
+}
+
+.video img{
+	width: 100%;
+	display: block;
+}
+
+.video h3{
+	margin: 0px;
+	padding: 10px 0px 10px 10px;
+	line-height: normal;
+}

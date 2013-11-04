@@ -22,7 +22,7 @@ var clients = [];
 io.sockets.on('connection', function(socket){
 	clients.push(socket);
 	socket.on('search', function(data){
-		youtube.feeds.videos({q: data.search_query}, function(err, response){
+		youtube.feeds.videos({"q": data.query}, function(err, response){
 			socket.emit('youtube-search-results', response);
 		});
 	});
@@ -31,7 +31,6 @@ io.sockets.on('connection', function(socket){
 		socket.emit('result', {result: "success!"});
 	});
 	socket.on('disconnect', function(){
-		io.sockets.emit('disconnection');
 		clients.splice(clients.indexOf(socket), 1);
 	});
 });
