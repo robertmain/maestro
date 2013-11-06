@@ -18,3 +18,7 @@
 	padding: 10px 0px 10px 10px;
 	line-height: normal;
 }
+
+.disabled{
+	background: #f00
+}

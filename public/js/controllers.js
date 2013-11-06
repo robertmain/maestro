@@ -1,8 +1,9 @@
 var nodejukeboxApp = angular.module('nodejukeboxApp', []);
  
-nodejukeboxApp.controller('VideoListCtrl', function VideoListCtrl($scope) {
-  $scope.videos = [
-    {'name': 'Nexus S',
-     'snippet': 'Fast just got faster with Nexus S.'},
-  ];
+nodejukeboxApp.controller('SearchResultCtrl', function SearchResultCtrl($scope) {
+	$scope.search_results = [];
+});
+
+nodejukeboxApp.controller('PlaylistCtrl', function PlaylistCtrl($scope) {
+	$scope.playlist = [];
 });

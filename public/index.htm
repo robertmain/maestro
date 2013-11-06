@@ -19,11 +19,15 @@
 				<h1><%= config.application.name%></h1>
 				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"></a>
 			</div>
-			<div data-role="content">
-				<ul data-role="listview" data-divider-theme="" data-inset="false" ng-controller="VideoListCtrl">
-					<li class="video" ng-repeat="video in videos" ng-if="videos.length">
-						<img src="{{video.thumbnail.hqDefault}}" alt="{{video.title}}" />
-						<a href="#page1" data-transition="slide">{{video.title}}</a>
+			<div data-role="content" ng-controller="SearchResultCtrl">
+				<ul data-role="listview" data-divider-theme="" data-inset="false">
+					<li ng-show="search_results.length > 0" data-role="list-divider" data-theme="c">Search Results</li>
+					<li ng-repeat="search_result in search_results" ng-class="{disabled: sync.playlist.indexOf(search_result) == -1}" data-theme="c">
+						<a href="#" data-transition="slide" data-url="{{search_result.id}}" title="Add {{search_result.title}} to playlist">
+							<img ng-src="{{search_result.thumbnail.hqDefault}}" alt="{{search_result.title}}" />
+							<h2>{{search_result.title}}</h2>
+							<p>{{search_result.uploader}}</p>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -42,6 +46,7 @@
 		</div>
 		<script>
 			var socket = io.connect();
+			var sync = {now_playing: 0, playlist: []};
 			$('#searchYouTube').submit(function(event){
 				var search_query = $(this).find('input[name="q"]').val();
 				if(search_query != ""){
@@ -64,19 +69,26 @@
 				event.stopPropagation();
 				event.preventDefault();
 			});
-			function clearPage(){
-				$('div[data-role="content"]').empty();
-			}
-
 			socket.on('youtube-search-results', function(data){
 				angular.element($('div[data-role="content"]')).scope().$apply(function ($scope){
-					var videos = [];
+					var search_results = [];
 					$.each(data.items, function(index, val){
-						videos.push(val);
+						search_results.push(val);
 					});
-					$scope.videos = videos;
+					$scope.search_results = search_results;
 				});
 				$.mobile.loading("hide");
+				$('ul[data-role="listview"]').listview('refresh');
+			});
+			socket.on('sync', function(sync){
+				//var sync = sync; //Sync the playlist as well as updating the currently playing song
+				console.log(sync);
+			});
+			$('div[data-role="content"]').on('click', 'a', function(event){
+				var video_id = $(this).attr('data-url');
+				socket.emit('add_song', video_id);
+				event.preventDefault();
+				event.stopPropagation();
 			});
 		</script>
 	</body>

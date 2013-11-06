@@ -8,8 +8,10 @@ var express = require('express')
 	, app = express()
 	, server = require('http').createServer(app)
 	, io = require('socket.io').listen(server)
-	, youtube = require('youtube-feeds');
+	, youtube = require('youtube-feeds')
+	, mdns = require('mdns');
 
+var playlist = require('./playlist');
 /**
 * Global vars
 */
@@ -17,7 +19,7 @@ var data = {};
 var clients = [];
 
 /**
-* Socket.IO Event Handlers
+* Socket.IO Event Handlers for Main Application
 */
 io.sockets.on('connection', function(socket){
 	clients.push(socket);
@@ -53,5 +55,14 @@ app.get("/", function(req, res){
 /**
 * Set the server up and spit out the IP and port
 */
+console.log(config.application.name + " Now Listening On " + ip.address() + ":" + config.webserver.port);
 server.listen(config.webserver.port);
-console.log("Server Now Listening On Port " + ip.address() + ":" + config.webserver.port);
+playlist.init(server, io);
+var ad = mdns.createAdvertisement(
+	mdns.tcp("jukebox"), 
+	config.webserver.port,
+	{
+		name: config.application.name,
+		txtRecord: {}
+	}
+);
