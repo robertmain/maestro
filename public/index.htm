@@ -13,8 +13,7 @@
 	</head>
 
 	<body ng-app="nodejukeboxApp">
-
-		<div data-role="page" data-theme="a">
+		<div data-role="page" data-theme="c" id="video_list">
 			<div data-role="header">
 				<h1><%= config.application.name%></h1>
 				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"></a>
@@ -36,34 +35,63 @@
 					<li data-role="list-divider">Menu</li>
 					<li>
 						<form id="searchYouTube">
-							<input name="q" placeholder="Search YouTube" value="" type="search" />							
+							<input name="q" placeholder="Search YouTube" value="" type="search" />
 						</form>
 					</li>
-					<li><a href="#" data-rel="">Playlist</a></li>
-					<li><a href="#" data-rel="">Now Playing</a></li>
+					<li><a>Playlist</a></li>
+					<li><a href="#video_details">Now Playing</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="page" data-theme="c" id="video_details">
+			<div data-role="header">
+				<h1><%= config.application.name%></h1>
+				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"></a>
+			</div>
+			<div data-role="content" ng-controller="SearchResultCtrl">
+				<div class="ui-grid-b">
+					<div class="ui-block-a">
+						<img src="http://i.ytimg.com/vi/tKTZoB2Vjuk/hqdefault.jpg" alt="" />
+					</div>
+					<div class="ui-block-b">
+						<h1>Hello world</h1>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sem leo, dignissim sit amet volutpat in, facilisis in sem. Nullam nisi erat, venenatis sit amet elit vitae, dapibus sodales purus. Mauris luctus in tellus sit amet aliquam. Vestibulum pretium urna et lorem sagittis rutrum. Cras eget augue sem. Aliquam vitae laoreet ante. Maecenas non risus sit amet tellus volutpat ultrices. Donec vel eleifend augue. Curabitur tristique tincidunt massa, ac tincidunt mi rutrum a. Proin iaculis porttitor semper. Sed ultricies sem id velit rhoncus congue. Nunc eget gravida eros, at sollicitudin nulla. Donec malesuada erat enim. Mauris quis elit id ipsum tempus dapibus. Sed accumsan mattis eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+						</p>
+						<p>
+							Ut sagittis enim malesuada volutpat rutrum. Donec in tempor nulla. Nullam egestas tincidunt purus nec semper. In nec porttitor dui, a scelerisque nisl. Sed vehicula, lectus vitae accumsan mattis, mauris quam porta lacus, eu ultricies nisl tortor sed orci. Curabitur ultrices pulvinar lorem ac vulputate. Maecenas semper at massa eget fringilla. Integer tempus hendrerit orci vel gravida. Aliquam consequat diam elit, sit amet porta ante congue vel. Nullam lacinia quam sed pulvinar sollicitudin. Sed at eros purus.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div data-role="panel" id="left-panel" data-theme="a" data-display="overlay">
+				<ul data-role="listview">
+					<li data-role="list-divider">Menu</li>
+					<li>
+						<form id="searchYouTube">
+							<input name="q" placeholder="Search YouTube" value="" type="search" />
+						</form>
+					</li>
+					<li><a href="#video_list">Playlist</a></li>
+					<li><a href="#video_details">Now Playing</a></li>
 				</ul>
 			</div>
 		</div>
 		<script>
 			var socket = io.connect();
-			var sync = {now_playing: 0, playlist: []};
+			var sync = {now_playing: 0, playlist: [], search_results: []};
 			$('#searchYouTube').submit(function(event){
 				var search_query = $(this).find('input[name="q"]').val();
 				if(search_query != ""){
 					socket.emit('search', {query: search_query});
 					$('#left-panel').panel('close');
-					var $this = $(document),
-						theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
-						msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
-						textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
-						textonly = !!$this.jqmData( "textonly" );
-						html = $this.jqmData( "html" ) || "";
-					$.mobile.loading( "show", {
-						text: msgText,
-						textVisible: textVisible,
-						theme: theme,
-						textonly: textonly,
-						html: html
+					var $this = $(document);
+					$.mobile.loading("show", {
+						text: $this.jqmData("msgtext") || $.mobile.loader.prototype.options.text,
+						textVisible: $this.jqmData("textvisible") || $.mobile.loader.prototype.options.textVisible,
+						theme: $this.jqmData("theme") || $.mobile.loader.prototype.options.theme,
+						textonly: !!$this.jqmData( "textonly" ),
+						html: $this.jqmData("html") || ""
 					});
 				}
 				event.stopPropagation();
@@ -78,14 +106,28 @@
 					$scope.search_results = search_results;
 				});
 				$.mobile.loading("hide");
-				$('ul[data-role="listview"]').listview('refresh');
+				$('ul[data-role="listview"]').listview('refresh'); //this is broken, but still works for some weird reason...
 			});
 			socket.on('sync', function(sync){
-				//var sync = sync; //Sync the playlist as well as updating the currently playing song
+				//var sync = sync;
+				//Sync the playlist as well as updating the currently playing song
 				console.log(sync);
 			});
-			$('div[data-role="content"]').on('click', 'a', function(event){
-				var video_id = $(this).attr('data-url');
+			socket.on('connect', function(){
+				$.mobile.loading("hide");
+			});
+			socket.on('disconnect', function(){
+				$this = $(document);
+				$.mobile.loading( "show", {
+					text: "Disconnected From Server. Retrying Connection...",
+					textVisible: true,
+					theme: $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+					textonly: false,
+					html: ""
+				});
+			});
+			$('div[data-role="content"]').on('click', 'a.addToPlayList', function(event){
+				var video_id = $(this).attr('data-video-id');
 				socket.emit('add_song', video_id);
 				event.preventDefault();
 				event.stopPropagation();

@@ -13,7 +13,13 @@
     "consolidate": "~0.9.1",
     "ip": "~0.1.0",
     "youtube-feeds": "~2.2.1",
-    "mdns": "~1.1.0"
+    "mdns": "~1.1.0",
+    "stdio": "~0.1.2",
+    "request": "~2.29.0",
+    "xml2js": "~0.4.0",
+    "lame": "~1.0.3",
+    "node-ffprobe": "~1.2.2",
+    "ffmpeg": "0.0.4"
   },
   "repository": "https://github.com/robertmain/jukebox",
   "author": "Robert Main",

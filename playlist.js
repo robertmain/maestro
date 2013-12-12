@@ -8,8 +8,8 @@ function init(server, io){
 		socket.on('add_song', function(video_id){
 			youtube.video(video_id, function(err, video){
 				playlist.push(video);
+				io.sockets.emit('sync', {now_playing: now_playing, playlist: playlist});
 			});
-			io.sockets.emit('sync', {now_playing: now_playing, playlist: playlist});
 		});
 
 		socket.on('remove_song', function(video){

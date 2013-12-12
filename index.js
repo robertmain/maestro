@@ -3,15 +3,23 @@
 */
 var express = require('express')
 	, ip = require('ip')
+	, request = require('request')
 	, config = require('./config/config.js')
 	, cons = require('consolidate')
 	, app = express()
 	, server = require('http').createServer(app)
 	, io = require('socket.io').listen(server)
-	, youtube = require('youtube-feeds')
-	, mdns = require('mdns');
+	, mdns = require('mdns')
+	, stdio = require('stdio') //For help on how to use the stdio mod see this: http://stackoverflow.com/questions/4351521/how-to-pass-command-line-arguments-to-node-js
+	, video = require('./video')
+	, youtube = require('youtube-feeds');
 
 var playlist = require('./playlist');
+var flv = require('flv');
+var decoder = new flv.Decoder();
+video.getInfo('-U3jrS-uhuo', function(data){
+	video.play(data);
+});
 /**
 * Global vars
 */
@@ -28,6 +36,10 @@ io.sockets.on('connection', function(socket){
 			socket.emit('youtube-search-results', response);
 		});
 	});
+	/**
+	* Test event for testing android socket i/o stuff - will be removed on release.
+	* @todo: remove this
+	**/
 	socket.on('test-connection', function(data){
 		console.log("Success!");
 		socket.emit('result', {result: "success!"});
@@ -58,8 +70,8 @@ app.get("/", function(req, res){
 console.log(config.application.name + " Now Listening On " + ip.address() + ":" + config.webserver.port);
 server.listen(config.webserver.port);
 playlist.init(server, io);
-var ad = mdns.createAdvertisement(
-	mdns.tcp("jukebox"), 
+mdns.createAdvertisement(
+	mdns.tcp("jukebox"),
 	config.webserver.port,
 	{
 		name: config.application.name,
