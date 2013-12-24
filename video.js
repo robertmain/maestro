@@ -34,25 +34,8 @@ function getInfo (video_id, callback){
 }
 
 function play(video_info){
-	// request(video_info.audioURL).pipe(new lame.Decoder).on('format', console.log).pipe(new speaker); //Plays a remote MP3 perfectly, just not an m4a
-	var proc = new ffmpeg({ source: video_info.audioURL, nolog: true })
-	.toFormat('wav')
-	.writeToStream(new speaker, function(retcode, error){
-		if(error){
-			console.log(error);
-		}
-		else{
-			console.log("Conversion completed");
-		}
-	});
-	// .saveToFile(video_info.title + ".wav", function(retcode, error){
-	// 	if(error){
-	// 		console.error(error);
-	// 	}
-	// 	else{	
-	// 		consoe.log('file has been converted succesfully');
-	// 	}
-	// });
+	console.log("Now Playing: " + video_info.title);
+	var proc = new ffmpeg({ source: video_info.audioURL, nolog: true }).toFormat('wav').writeToStream(new speaker);
 }
 
 exports.getInfo = getInfo;

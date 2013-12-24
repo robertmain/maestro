@@ -12,12 +12,8 @@ var express = require('express')
 	, mdns = require('mdns')
 	, stdio = require('stdio') //For help on how to use the stdio mod see this: http://stackoverflow.com/questions/4351521/how-to-pass-command-line-arguments-to-node-js
 	, video = require('./video')
-	, youtube = require('youtube-feeds');
-
-var playlist = require('./playlist');
-video.getInfo('In6eb747IBI', function(data){
-	video.play(data);
-});
+	, youtube = require('youtube-feeds')
+	, playlist = require('./playlist');
 
 /**
 * Global vars
@@ -37,6 +33,11 @@ io.sockets.on('connection', function(socket){
 	});
 	socket.on('disconnect', function(){
 		clients.splice(clients.indexOf(socket), 1);
+	});
+	socket.on('play', function(data){
+		video.getInfo(data, function(data){
+			video.play(data);
+		});
 	});
 });
 
@@ -61,6 +62,10 @@ app.get("/", function(req, res){
 console.log(config.application.name + " Now Listening On " + ip.address() + ":" + config.webserver.port);
 server.listen(config.webserver.port);
 playlist.init(server, io);
+
+/** 
+* Announce ourselves on the network so that clients can find us
+*/
 mdns.createAdvertisement(
 	mdns.tcp("jukebox"),
 	config.webserver.port,

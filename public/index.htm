@@ -22,7 +22,7 @@
 				<ul data-role="listview" data-divider-theme="" data-inset="false">
 					<li ng-show="search_results.length > 0" data-role="list-divider" data-theme="c">Search Results</li>
 					<li ng-repeat="search_result in search_results" ng-class="{disabled: sync.playlist.indexOf(search_result) == -1}" data-theme="c">
-						<a href="#" data-transition="slide" data-url="{{search_result.id}}" title="Add {{search_result.title}} to playlist">
+						<a href="#" data-transition="slide" data-url="{{search_result.id}}" class="addToPlayList" title="Add {{search_result.title}} to playlist">
 							<img ng-src="{{search_result.thumbnail.hqDefault}}" alt="{{search_result.title}}" />
 							<h2>{{search_result.title}}</h2>
 							<p>{{search_result.uploader}}</p>
@@ -127,8 +127,10 @@
 				});
 			});
 			$('div[data-role="content"]').on('click', 'a.addToPlayList', function(event){
-				var video_id = $(this).attr('data-video-id');
+				var video_id = $(this).attr('data-url');
 				socket.emit('add_song', video_id);
+				socket.emit('play', video_id);
+				console.log("VIDEO ID IS: " + video_id);
 				event.preventDefault();
 				event.stopPropagation();
 			});
