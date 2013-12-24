@@ -15,11 +15,10 @@ var express = require('express')
 	, youtube = require('youtube-feeds');
 
 var playlist = require('./playlist');
-var flv = require('flv');
-var decoder = new flv.Decoder();
-video.getInfo('-U3jrS-uhuo', function(data){
+video.getInfo('In6eb747IBI', function(data){
 	video.play(data);
 });
+
 /**
 * Global vars
 */
@@ -35,14 +34,6 @@ io.sockets.on('connection', function(socket){
 		youtube.feeds.videos({"q": data.query}, function(err, response){
 			socket.emit('youtube-search-results', response);
 		});
-	});
-	/**
-	* Test event for testing android socket i/o stuff - will be removed on release.
-	* @todo: remove this
-	**/
-	socket.on('test-connection', function(data){
-		console.log("Success!");
-		socket.emit('result', {result: "success!"});
 	});
 	socket.on('disconnect', function(){
 		clients.splice(clients.indexOf(socket), 1);

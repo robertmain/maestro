@@ -17,9 +17,10 @@
     "stdio": "~0.1.2",
     "request": "~2.29.0",
     "xml2js": "~0.4.0",
-    "lame": "~1.0.3",
-    "node-ffprobe": "~1.2.2",
-    "ffmpeg": "0.0.4"
+    "ffmpeg": "0.0.4",
+    "speaker": "0.0.10",
+    "fluent-ffmpeg": "~1.5.2",
+    "lame": "~1.0.3"
   },
   "repository": "https://github.com/robertmain/jukebox",
   "author": "Robert Main",
