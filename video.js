@@ -45,8 +45,12 @@ function getInfo (video_id, callback){
 
 function play(video_info){
 	console.log("Now Playing: " + video_info.title);
-	var proc = new ffmpeg({ source: request(video_info.audioURL), nolog: true }).toFormat('wav').writeToStream(new speaker);
-	
+	var stream = request(video_info.audioURL);
+	var speaker_instance = new speaker();
+	var proc = new ffmpeg({source: stream, nolog: true}).toFormat('wav').writeToStream(speaker_instance);
+	speaker_instance.on('error', function(err){
+		console.error("ERROR: " + err);
+	});
 }
 
 exports.getInfo = getInfo;
