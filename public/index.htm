@@ -21,7 +21,7 @@
 			<div data-role="content" ng-controller="SearchResultCtrl">
 				<ul data-role="listview" data-divider-theme="" data-inset="false">
 					<li ng-show="search_results.length > 0" data-role="list-divider" data-theme="c">Search Results</li>
-					<li ng-repeat="search_result in search_results" ng-class="{disabled: sync.playlist.indexOf(search_result) == -1}" data-theme="c">
+					<li ng-repeat="search_result in search_results" ng-show="{{search_result.accessControl.embed == \"allowed\"}}" ng-class="{disabled: sync.playlist.indexOf(search_result) == -1}" data-theme="c">
 						<a href="#" data-transition="slide" data-url="{{search_result.id}}" class="addToPlayList" title="Add {{search_result.title}} to playlist">
 							<img ng-src="{{search_result.thumbnail.hqDefault}}" alt="{{search_result.title}}" />
 							<h2>{{search_result.title}}</h2>
@@ -104,6 +104,7 @@
 						search_results.push(val);
 					});
 					$scope.search_results = search_results;
+					console.log(search_results);
 				});
 				$.mobile.loading("hide");
 				$('ul[data-role="listview"]').listview('refresh'); //this is broken, but still works for some weird reason...
@@ -125,6 +126,9 @@
 					textonly: false,
 					html: ""
 				});
+			});
+			socket.on('error', function(error){
+				$("<div>Poop.</div>").popup('open');
 			});
 			$('div[data-role="content"]').on('click', 'a.addToPlayList', function(event){
 				var video_id = $(this).attr('data-url');

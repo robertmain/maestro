@@ -10,9 +10,10 @@ var express = require('express')
 	, server = require('http').createServer(app)
 	, io = require('socket.io').listen(server)
 	, mdns = require('mdns')
+	, open = require('open')
 	, stdio = require('stdio') //For help on how to use the stdio mod see this: http://stackoverflow.com/questions/4351521/how-to-pass-command-line-arguments-to-node-js
-	, video = require('./video')
 	, youtube = require('youtube-feeds')
+	, video = require('./video')
 	, playlist = require('./playlist');
 
 /**
@@ -56,6 +57,12 @@ app.get("/", function(req, res){
 	res.render("index.htm", data);
 });
 
+app.get('/qr', function(req, res){
+	data.config = config;
+	data.ip = ip.address();
+	res.render('qr.htm', data);
+});
+
 /**
 * Set the server up and spit out the IP and port
 */
@@ -63,6 +70,10 @@ console.log(config.application.name + " Now Listening On " + ip.address() + ":" 
 server.listen(config.webserver.port);
 playlist.init(server, io);
 
+/**
+* Let's display a nice config QR code for the user if they wish
+*/
+open('http://' + ip.address() + ":" + config.webserver.port + "/qr");
 /** 
 * Announce ourselves on the network so that clients can find us
 */

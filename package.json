@@ -20,9 +20,14 @@
     "ffmpeg": "0.0.4",
     "speaker": "0.0.10",
     "fluent-ffmpeg": "~1.5.2",
-    "lame": "~1.0.3"
+    "lame": "~1.0.3",
+    "open": "0.0.4"
   },
   "repository": "https://github.com/robertmain/jukebox",
   "author": "Robert Main",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-node-inspector": "~0.1.2"
+  }
 }

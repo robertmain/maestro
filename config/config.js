@@ -8,5 +8,6 @@ self.webserver = {
 
 self.application = {
 	name: "Node Jukebox",
-	slogan: "Use youtube as a JukeBox!"
+	slogan: "Use youtube as a JukeBox!",
+	display_qr: true
 };
