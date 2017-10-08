@@ -13,10 +13,8 @@
     "url": "git@github.com:robertmain/jukebox.git"
   },
   "dependencies": {
-    "@types/ffprobe-static": "^2.0.0",
     "@types/fluent-ffmpeg": "^2.1.4",
     "@types/node": "^8.0.33",
-    "ffprobe": "^1.1.0",
     "fluent-ffmpeg": "^2.1.2"
   }
 }

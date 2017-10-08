@@ -1,22 +1,27 @@
 import StreamAdapter from "./media_providers/StreamAdapter"
+import { Readable } from "stream";
 
 export default class Song{
 
     public readonly url : string;
     public readonly title : string;
-    public readonly description : string;
-    public readonly length : number;
+    public readonly artist : string;
+    public readonly album : string;
+    public readonly genre : string; 
+    public readonly duration : number;
     private stream_adapter : StreamAdapter;
 
-    public constructor(url : string, title : string, description : string, length : number, stream_adapter : StreamAdapter){
+    public constructor(url : string, title : string, artist : string, album : string, genre : string, duration : number, stream_adapter : StreamAdapter){
         this.url            = url;
-        this.title          = title;
-        this.description    = description;
-        this.length         = length;
+        this.title          = title || 'Title Unavailable';
+        this.artist         = artist || 'Unknown Artist';
+        this.album          = album || 'Unknown Album';
+        this.genre          = genre || 'Unknown Genre';
+        this.duration       = duration;
         this.stream_adapter = stream_adapter;
     }
 
-    public getAudio() {
-        this.stream_adapter.getAudio(this.url);
+    public getAudio() : Readable{
+        return this.stream_adapter.getAudio(this.url);
     }
 }
