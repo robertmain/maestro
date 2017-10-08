@@ -5,6 +5,10 @@ import StreamAdapter from '../StreamAdapter';
 
 export default class DiskAdapter implements StreamAdapter{
     public getAudio(file_path : string): Readable {
-        return fs.createReadStream(file_path);
+        if(fs.existsSync(file_path)) {
+            return fs.createReadStream(file_path);
+        } else {
+            throw new Error('Unable to locate file ' + file_path + ' on disk')
+        }
     }
 }
