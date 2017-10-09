@@ -1,5 +1,5 @@
 import { Readable } from "stream";
 
-export default interface StreamAdapter {
+export default interface MediaProvider {
     getAudio(url : string) : Readable;
 }

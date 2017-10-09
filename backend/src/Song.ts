@@ -1,4 +1,4 @@
-import StreamAdapter from "./media_providers/StreamAdapter"
+import MediaProvider from "./MediaProvider"
 import { Readable } from "stream";
 
 export default class Song{
@@ -9,9 +9,9 @@ export default class Song{
     public readonly album : string;
     public readonly genre : string; 
     public readonly duration : number;
-    private stream_adapter : StreamAdapter;
+    private stream_adapter : MediaProvider;
 
-    public constructor(url : string, title : string, artist : string, album : string, genre : string, duration : number, stream_adapter : StreamAdapter){
+    public constructor(url : string, title : string, artist : string, album : string, genre : string, duration : number, stream_adapter : MediaProvider){
         this.url            = url;
         this.title          = title || 'Title Unavailable';
         this.artist         = artist || 'Unknown Artist';

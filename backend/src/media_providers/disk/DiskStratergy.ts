@@ -4,7 +4,7 @@ import { Readable } from 'stream';
 
 import SongFactory from '../SongFactory'
 import Song from '../../Song'
-import StreamAdapter from '../StreamAdapter';
+import MediaProvider from '../MediaProvider';
 
 class DiskSongFactory implements SongFactory{
     
@@ -29,7 +29,7 @@ class DiskSongFactory implements SongFactory{
     
 }
 
-class DiskAdapter implements StreamAdapter{
+class DiskAdapter implements MediaProvider{
     public getAudio(file_path : string): Readable {
         if(fs.existsSync(file_path)) {
             return fs.createReadStream(file_path);
