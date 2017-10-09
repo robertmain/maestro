@@ -1,10 +1,12 @@
 import * as ffmpeg from 'fluent-ffmpeg';
+import * as fs from "fs";
+import { Readable } from 'stream';
 
 import SongFactory from '../SongFactory'
 import Song from '../../Song'
-import DiskAdapter from './DiskAdapter'
+import StreamAdapter from '../StreamAdapter';
 
-export default class DiskSongFactory implements SongFactory{
+class DiskSongFactory implements SongFactory{
     
     getSong(file_path: string): Promise<Song> {
         return new Promise((resolve, reject) => ffmpeg(file_path).ffprobe( (err, stream_metadata) => {
@@ -26,3 +28,15 @@ export default class DiskSongFactory implements SongFactory{
     }
     
 }
+
+class DiskAdapter implements StreamAdapter{
+    public getAudio(file_path : string): Readable {
+        if(fs.existsSync(file_path)) {
+            return fs.createReadStream(file_path);
+        } else {
+            throw new Error('Unable to locate file ' + file_path + ' on disk')
+        }
+    }
+}
+
+export default DiskSongFactory;
