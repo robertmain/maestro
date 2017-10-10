@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for node jukebox",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Main",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:robertmain/jukebox.git"
+  },
+  "dependencies": {
+    "@types/fluent-ffmpeg": "^2.1.4",
+    "@types/node": "^8.0.33",
+    "fluent-ffmpeg": "^2.1.2",
+    "speaker": "^0.4.0"
+  }
+}
