@@ -1,4 +1,4 @@
-import MediaProvider from "./MediaProvider"
+import MediaProvider from "./media_providers/MediaProvider"
 import { Readable } from "stream";
 
 export default class Song{
@@ -21,7 +21,7 @@ export default class Song{
         this.stream_adapter = stream_adapter;
     }
 
-    public getAudio() : Readable{
+    public getAudio() : Promise<Readable>{
         return this.stream_adapter.getAudio(this.url);
     }
 }
