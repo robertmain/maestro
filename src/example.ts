@@ -2,9 +2,9 @@ import SongDiskFactory from './media_providers/disk/DiskStrategy';
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as Speaker from 'speaker';
 
-let f = new SongDiskFactory('path/to/my/music/folder');
 
-let song_object = f.getSong('mysong.mp3');
+let f = new SongDiskFactory('C:\\Users\\robert\\Desktop\\jukebox-songs');
+let song_object = f.getSong('Eric Prydz - Call On Me.mp3');
 
 song_object.then((song) => {
     console.log('Now playing: ' + song.artist + ' - ' + song.title);
