@@ -10,10 +10,12 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 
 1. Download chocolatey [here](https://chocolatey.org/install)
 1. `choco install ffmpeg bonjour`
+1. Install windows build tools: `npm install --global --production windows-build-tools`
 
 #### Manually
 1. Download Bonjour [from here](https://support.apple.com/downloads/bonjour_for_windows)
 1. Download ffmpeg [from here](https://www.ffmpeg.org/)
+1. Install windows build tools: `npm install --global --production windows-build-tools`
 
 ### Linux
 
