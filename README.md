@@ -1,5 +1,5 @@
 # Node Jukebox
-
+[![Build Status](https://travis-ci.org/robertmain/jukebox.svg?branch=master)](https://travis-ci.org/robertmain/jukebox)  
 A nodeJS youtube jukebox application. Great for parties and stuff :-)
 
 ## Installation Instructions
