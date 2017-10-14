@@ -5,17 +5,15 @@
         "branches": [80, 95],
         "statements": [80, 95]
     },
-    "reporter": [
-        "json",
-        "text-summary"
-    ],
     "extension": [
         ".ts"
     ],
+    "include": [
+        "src/**/*.ts"
+    ],
     "exclude": [
-        "test/**/*.*",
+        "src/**/*.d.ts",
         "src/example.ts"
     ],
-    "cache": false,
-    "all": true
+    "cache": false
 }

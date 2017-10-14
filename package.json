@@ -4,8 +4,11 @@
   "description": "Backend for node jukebox",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --require ts-node/register -R spec test/**/*.ts",
-    "posttest": "./node_modules/.bin/nyc report --reporter=json && ./node_modules/.bin/codecov -f coverage/*.json",
+    "test": "nyc --all _mocha --require ts-node/register -R spec test/**/*.ts",
+    "__coverage": "rm -rf coverage && nyc report",
+    "coverage:html": "npm run __coverage -- --reporter=html",
+    "coverage:json": "npm run __coverage -- --reporter=json",
+    "codecov": "npm run coverage:json && codecov -f coverage/*.json",
     "prebuild": "rm -rf dist",
     "build": "tsc"
   },
@@ -33,6 +36,7 @@
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "ts-node": "^3.3.0",
+    "typemoq": "^2.0.1",
     "typescript": "^2.5.3"
   }
 }
