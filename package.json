@@ -4,11 +4,14 @@
   "description": "Backend for node jukebox",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -P test --require ts-node/register test/*.mocha.ts",
-    "build": "rm -rf dist && tsc --sourceMap -P tsconfig.json"
-},
-"author": "Robert Main",
-"license": "ISC",
+    "postinstall": "npm link nyc",
+    "test": "./node_modules/.bin/_mocha --require ts-node/register -R spec test/**/*.mocha.ts",
+    "posttest": "nyc report --reporter=json && ./node_modules/.bin/codecov -f coverage/*.json",
+    "prebuild": "rm -rf dist",
+    "build": "tsc"
+  },
+  "author": "Robert Main",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git@github.com:robertmain/jukebox.git"
@@ -23,11 +26,13 @@
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/istanbul": "^0.4.29",
     "@types/mocha": "^2.2.43",
-    "@types/sinon": "^2.3.6",
     "chai": "^4.1.2",
+    "codecov": "^2.3.0",
+    "istanbul": "^0.4.5",
     "mocha": "^4.0.1",
-    "sinon": "^4.0.1",
+    "nyc": "^11.2.1",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.3"
   }
