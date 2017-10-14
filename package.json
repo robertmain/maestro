@@ -4,9 +4,8 @@
   "description": "Backend for node jukebox",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm link nyc",
-    "test": "./node_modules/.bin/_mocha --require ts-node/register -R spec test/**/*.mocha.ts",
-    "posttest": "nyc report --reporter=json && ./node_modules/.bin/codecov -f coverage/*.json",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/_mocha --require ts-node/register -R spec test/**/*.mocha.ts",
+    "posttest": "./node_modules/.bin/nyc report --reporter=json && ./node_modules/.bin/codecov -f coverage/*.json",
     "prebuild": "rm -rf dist",
     "build": "tsc"
   },

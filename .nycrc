@@ -1,18 +1,16 @@
 {
-    "check-coverage": true,
-    "per-file": true,
-    "lines": 20,
-    "statements": 90,
-    "functions": 90,
-    "branches": 90,
     "exclude": [
         "src/example.ts"
     ],
     "reporter": [
-        "lcovonly"
+        "json",
+        "html"
     ],
     "extension": [
         ".ts"
+    ],
+    "exclude": [
+        "test/**/*.*"
     ],
     "cache": false,
     "all": true
