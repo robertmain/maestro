@@ -1,0 +1,17 @@
+{
+    "exclude": [
+        "src/example.ts"
+    ],
+    "reporter": [
+        "json",
+        "html"
+    ],
+    "extension": [
+        ".ts"
+    ],
+    "exclude": [
+        "test/**/*.*"
+    ],
+    "cache": false,
+    "all": true
+}
