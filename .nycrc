@@ -1,16 +1,20 @@
 {
-    "exclude": [
-        "src/example.ts"
-    ],
+    "watermarks": {
+        "lines": [80, 95],
+        "functions": [80, 95],
+        "branches": [80, 95],
+        "statements": [80, 95]
+    },
     "reporter": [
         "json",
-        "html"
+        "text-summary"
     ],
     "extension": [
         ".ts"
     ],
     "exclude": [
-        "test/**/*.*"
+        "test/**/*.*",
+        "src/example.ts"
     ],
     "cache": false,
     "all": true
