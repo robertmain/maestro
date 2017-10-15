@@ -10,3 +10,4 @@ before_install:
   - sudo apt-get install -y libasound2-dev
 test:
   - npm run test && npm run codecov
+  
