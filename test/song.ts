@@ -51,9 +51,28 @@ describe('A song', () => {
         })
     });
 
+    describe('sample rate', () => {
+        it('provides the song sample rate', () => {
+            const song = new Song('song.mp3', 30, <MediaProvider>{}, 30);
+            expect(song.sample_rate).to.be.greaterThan(0);
+            expect(song.sample_rate).to.equal(30);
+        });
+
+        it('defaults to 44100', () => {
+            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            expect(song.sample_rate).to.equal(44100);
+        });
+
+        it('is an integral number', () => {
+            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            expect(song.sample_rate).to.be.a('number');
+            expect(song.sample_rate % 1).to.equal(0);
+        });
+    });
+
     describe ('title', () => {
         it('represents the title field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, 'Graceland');
+            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, 'Graceland');
             expect(song.title).to.equal('Graceland');
         });
 

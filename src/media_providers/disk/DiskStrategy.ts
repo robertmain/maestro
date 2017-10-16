@@ -9,12 +9,9 @@ import MediaProvider from '../MediaProvider';
 
 class DiskSongFactory implements SongFactory{
 
-    private songs_directory : string;
-
-    constructor(songs_directory : string){
-        this.songs_directory = songs_directory;
+    constructor(readonly songs_directory : string){
     }
-    
+
     public getSong(file_path: string): Promise<Song> {
         return new Promise((resolve, reject) => ffmpeg(this.songs_directory + path.sep + file_path).ffprobe( (err, stream_metadata) => {
             if (err) {
@@ -25,6 +22,7 @@ class DiskSongFactory implements SongFactory{
                     this.songs_directory + path.sep + file_path,
                     stream_metadata.streams[0].duration,
                     new DiskAdapter(),
+                    stream_metadata.streams[0].sample_rate,
                     id3_data.title,
                     id3_data.artist,
                     id3_data.album,
