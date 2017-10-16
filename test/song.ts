@@ -39,8 +39,9 @@ describe('A song', () => {
             expect(song.duration).to.be.above(0);
         })
 
-        it('is an ordinal number', () => {
+        it('is an integral number', () => {
             expect(song.duration).to.be.a('number');
+            expect(song.duration % 1).to.equal(0);
         });
     });
 
@@ -84,11 +85,11 @@ describe('A song', () => {
 
     describe ('artist', () => {
         it('represents the artist field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, 'Graceland', 'Paul Simon');
+            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, 'Paul Simon');
             expect(song.artist).to.equal('Paul Simon');
         });
 
-        it('provides a default value if omitted', () => {
+        it('defaults to "Unknown Artist"', () => {
             const song = new Song('song.mp3', 30, <MediaProvider>{});
             expect(song.artist).to.equal('Unknown Artist');
         });
@@ -96,11 +97,11 @@ describe('A song', () => {
 
     describe ('album', () => {
         it('represents the album field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, 'Graceland', 'Paul Simon', 'Graceland');
+            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, undefined, 'Graceland');
             expect(song.album).to.equal('Graceland');
         });
 
-        it('provides a default value if omitted', () => {
+        it('defaults to "Unknown Album"', () => {
             const song = new Song('song.mp3', 30, <MediaProvider>{});
             expect(song.album).to.equal('Unknown Album');
         });
@@ -108,11 +109,11 @@ describe('A song', () => {
 
     describe ('genre', () => {
         it('represents the genre field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, 'Graceland', 'Paul Simon', 'Graceland', 'Pop/Worldbeat');
+            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, undefined, undefined, 'Pop/Worldbeat');
             expect(song.genre).to.equal('Pop/Worldbeat');
         });
 
-        it('provides a default value if omitted', () => {
+        it('defaults to "Unknown Genre"', () => {
             const song = new Song('song.mp3', 30, <MediaProvider>{});
             expect(song.genre).to.equal('Unknown Genre');
         });
