@@ -23,12 +23,12 @@ class DiskSongFactory implements SongFactory{
                 let id3_data = stream_metadata.format.tags;
                 resolve(new Song(
                     this.songs_directory + path.sep + file_path,
-                    id3_data.title || '',
-                    id3_data.artist || '',
-                    id3_data.album || '',
-                    id3_data.genre || '',
                     stream_metadata.streams[0].duration,
-                    new DiskAdapter()
+                    new DiskAdapter(),
+                    id3_data.title,
+                    id3_data.artist,
+                    id3_data.album,
+                    id3_data.genre
                 ));
             }
         }))

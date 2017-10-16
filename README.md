@@ -25,3 +25,6 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 1. FFmpeg - `sudo apt-get install ffmpeg` (`sudo apt-get install libav` on older versions of Ubuntu)
 1. Speaker - `sudo apt-get install libasound2-dev`
 1. GCC Compiler - `sudo apt-get install gcc`
+
+## Testing
+The tests can be run using `npm run test` and (optionally) `npm run coverage:html` to generate a code coverage report
