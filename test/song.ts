@@ -5,6 +5,8 @@
  * Module dependencies.
  */
 import * as chai from 'chai';
+import * as TypeMoq from 'typemoq';
+import {Readable} from 'stream';
 
 import Song from '../src/Song';
 import MediaProvider from '../src/media_providers/MediaProvider';
@@ -19,7 +21,7 @@ var expect = chai.expect;
  * Unit tests
  */
 describe('A song', () => {
-    
+
     describe('identifier', () => {
         const song = new Song('song.mp3', 30, <MediaProvider>{});
         it('represents the location of a single file', () => {
@@ -34,10 +36,11 @@ describe('A song', () => {
         it('represents the length of the song in seconds', () => {
             expect(song).to.have.property('duration');
             expect(song.duration).to.equal(30);
+            expect(song.duration).to.be.above(0);
         })
-        
+
         it('is an ordinal number', () => {
-            expect(song.duration).to.be.a('number');            
+            expect(song.duration).to.be.a('number');
         });
     });
 
@@ -45,7 +48,6 @@ describe('A song', () => {
         const song = new Song('song.mp3', 30, <MediaProvider>{});
         it('provides a mechanism for audio retrieval', () => {
             expect(song).to.have.property('stream_adapter');
-            expect(song).to.respondTo('getAudio');
         })
     });
 
@@ -94,6 +96,22 @@ describe('A song', () => {
         it('provides a default value if omitted', () => {
             const song = new Song('song.mp3', 30, <MediaProvider>{});
             expect(song.genre).to.equal('Unknown Genre');
+        });
+    });
+
+    describe('getAudio method', () => {
+        it('provides an audio retrieval strategy stream for a given song', () => {
+            const mockAdapter : TypeMoq.IMock<MediaProvider> = TypeMoq.Mock.ofType<MediaProvider>();
+            mockAdapter
+            .setup(mockAdapter => mockAdapter.getAudio('song.mp3'))
+            .returns(() => new Promise<Readable>(() => {}));
+
+            const song = new Song('song.mp3', 30, mockAdapter.object);
+            let audio_promise = song.getAudio();
+
+            mockAdapter.verify(mockAdapter => mockAdapter.getAudio('song.mp3'), TypeMoq.Times.once());
+            expect(song).to.respondTo('getAudio');
+            expect(audio_promise).to.be.instanceOf(Promise);
         });
     });
 
