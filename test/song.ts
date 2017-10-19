@@ -14,8 +14,7 @@ import MediaProvider from '../src/media_providers/MediaProvider';
 /**
  * Globals
  */
-
-var expect = chai.expect;
+const expect = chai.expect;
 
 /**
  * Unit tests
@@ -123,8 +122,8 @@ describe('A song', () => {
         it('provides an audio retrieval strategy stream for a given song', () => {
             const mockAdapter : TypeMoq.IMock<MediaProvider> = TypeMoq.Mock.ofType<MediaProvider>();
             mockAdapter
-            .setup(mockAdapter => mockAdapter.getAudio('song.mp3'))
-            .returns(() => new Promise<Readable>(() => {}));
+                .setup(mockAdapter => mockAdapter.getAudio('song.mp3'))
+                .returns(() => new Promise<Readable>(() => {}));
 
             const song = new Song('song.mp3', 30, mockAdapter.object);
             let audio_promise = song.getAudio();
