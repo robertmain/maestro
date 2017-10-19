@@ -6,13 +6,14 @@ export default class Song{
     public constructor (
         readonly identifier     : string,
         readonly duration       : number,
-        readonly stream_adapter : MediaProvider, 
+        readonly stream_adapter : MediaProvider,
+        readonly sample_rate    : number = 44100,
         readonly title          : string = 'Title Unavailable',
         readonly artist         : string = 'Unknown Artist',
         readonly album          : string = 'Unknown Album',
         readonly genre          : string = 'Unknown Genre'
     ){
-        
+
     }
 
     public getAudio() : Promise<Readable>{
