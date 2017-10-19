@@ -5,7 +5,7 @@
 * Module dependencies.
 */
 import * as chai from 'chai';
-import * as chai_as_promised from 'chai-as-promised'; // tslint: ignore
+import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
 import {Readable}  from 'stream';
 
@@ -28,7 +28,7 @@ import DiskAdapter from '../../../src/media_providers/disk/DiskAdapter';
 const expect = chai.expect;
 chai.use(chai_as_promised);
 
-describe('A disk adapter', () => {
+describe('Disk adapter', () => {
 
     it('is able to retrieve song files from disk', () => {
         const da       = new DiskAdapter();
