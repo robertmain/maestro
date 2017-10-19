@@ -5,7 +5,7 @@
 * Module dependencies.
 */
 import * as chai from 'chai';
-import * as chai_as_promised from 'chai-as-promised'; // tslint: ignore
+import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
 import {Readable}  from 'stream';
 
@@ -28,21 +28,23 @@ import DiskAdapter from '../../../src/media_providers/disk/DiskAdapter';
 const expect = chai.expect;
 chai.use(chai_as_promised);
 
-describe('A disk adapter', () => {
+describe('Disk adapter', () => {
 
     it('is able to retrieve song files from disk', () => {
         const da       = new DiskAdapter();
         const songName = 'thissongexists.mp3';
 
-        expect(da).to.respondTo('getAudio');
-        expect(da.getAudio(songName)).to.be.instanceof(Promise);
-        expect(da.getAudio(songName)).to.eventually.be.an.instanceOf(Readable);
+        return Promise.all([
+            expect(da).to.respondTo('getAudio'),
+            expect(da.getAudio(songName)).to.be.instanceof(Promise),
+            expect(da.getAudio(songName)).to.eventually.be.an.instanceOf(Readable)
+        ]);
     });
 
     it('fails to find non-existant files', () => {
         const da = new DiskAdapter();
 
-        expect(da.getAudio('no.wav')).to.eventually.be.rejected;
+        return expect(da.getAudio('no.wav')).to.eventually.be.rejected;
     });
 });
 
