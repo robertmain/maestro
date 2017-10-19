@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for node jukebox",
-  "main": "index.js",
+  "main": "dist/example.js",
   "scripts": {
     "test": "nyc --all _mocha --require ts-node/register -R spec test/**/*.ts",
     "__coverage": "rm -rf coverage && nyc report",
@@ -10,7 +10,8 @@
     "coverage:json": "npm run __coverage -- --reporter=json",
     "codecov": "npm run coverage:json && codecov -f coverage/*.json",
     "prebuild": "rm -rf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "npm run build && node $npm_package_main"
   },
   "author": "Robert Main",
   "license": "ISC",
