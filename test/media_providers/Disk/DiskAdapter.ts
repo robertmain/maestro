@@ -34,15 +34,17 @@ describe('Disk adapter', () => {
         const da       = new DiskAdapter();
         const songName = 'thissongexists.mp3';
 
-        expect(da).to.respondTo('getAudio');
-        expect(da.getAudio(songName)).to.be.instanceof(Promise);
-        expect(da.getAudio(songName)).to.eventually.be.an.instanceOf(Readable);
+        return Promise.all([
+            expect(da).to.respondTo('getAudio'),
+            expect(da.getAudio(songName)).to.be.instanceof(Promise),
+            expect(da.getAudio(songName)).to.eventually.be.an.instanceOf(Readable)
+        ]);
     });
 
     it('fails to find non-existant files', () => {
         const da = new DiskAdapter();
 
-        expect(da.getAudio('no.wav')).to.eventually.be.rejected;
+        return expect(da.getAudio('no.wav')).to.eventually.be.rejected;
     });
 });
 
