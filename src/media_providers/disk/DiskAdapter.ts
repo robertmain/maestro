@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-
 import { Readable } from 'stream';
+
 import MediaProvider from '../MediaProvider';
 
 export default class DiskAdapter implements MediaProvider {
