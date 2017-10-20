@@ -1,5 +1,5 @@
 import Song from "../Song";
 
-export default interface SongFactory{
+export default interface AudioFactory{
     getSong(id : string) : Promise<Song>
 }

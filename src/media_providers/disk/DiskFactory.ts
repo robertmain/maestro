@@ -1,11 +1,11 @@
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as path from 'path';
 
-import SongFactory from '../SongFactory';
+import AudioFactory from '../AudioFactory';
 import Song from '../../Song';
-import DiskAdapter from './DiskAdapter';
+import DiskSource from './DiskSource';
 
-export default class DiskSongFactory implements SongFactory{
+export default class DiskFactory implements AudioFactory{
 
     constructor(readonly songs_directory : string){
     }
@@ -19,7 +19,7 @@ export default class DiskSongFactory implements SongFactory{
                 resolve(new Song(
                     this.songs_directory + path.sep + file_path,
                     stream_metadata.streams[0].duration,
-                    new DiskAdapter(),
+                    new DiskSource(),
                     stream_metadata.streams[0].sample_rate,
                     id3_data.title,
                     id3_data.artist,

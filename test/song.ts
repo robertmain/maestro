@@ -9,7 +9,7 @@ import * as TypeMoq from 'typemoq';
 import {Readable} from 'stream';
 
 import Song from '../src/Song';
-import MediaProvider from '../src/media_providers/MediaProvider';
+import AudioSource from '../src/media_providers/AudioSource';
 
 /**
  * Globals
@@ -22,7 +22,7 @@ const expect = chai.expect;
 describe('A song', () => {
 
     describe('identifier', () => {
-        const song = new Song('song.mp3', 30, <MediaProvider>{});
+        const song = new Song('song.mp3', 30, <AudioSource>{});
         it('represents the location of a single file', () => {
             expect(song).to.have.property('identifier');
             expect(song.identifier).to.equal('song.mp3')
@@ -31,7 +31,7 @@ describe('A song', () => {
     });
 
     describe('duration', () => {
-        const song = new Song('song.mp3', 30, <MediaProvider>{});
+        const song = new Song('song.mp3', 30, <AudioSource>{});
         it('represents the length of the song in seconds', () => {
             expect(song).to.have.property('duration');
             expect(song.duration).to.equal(30);
@@ -45,26 +45,26 @@ describe('A song', () => {
     });
 
     describe('stream adapter', () => {
-        const song = new Song('song.mp3', 30, <MediaProvider>{});
+        const song = new Song('song.mp3', 30, <AudioSource>{});
         it('provides a mechanism for audio retrieval', () => {
-            expect(song).to.have.property('stream_adapter');
+            expect(song).to.have.property('audio_source');
         })
     });
 
     describe('sample rate', () => {
         it('provides the song sample rate', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, 30);
+            const song = new Song('song.mp3', 30, <AudioSource>{}, 30);
             expect(song.sample_rate).to.be.greaterThan(0);
             expect(song.sample_rate).to.equal(30);
         });
 
         it('defaults to 44100', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.sample_rate).to.equal(44100);
         });
 
         it('is an integral number', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.sample_rate).to.be.a('number');
             expect(song.sample_rate % 1).to.equal(0);
         });
@@ -72,55 +72,55 @@ describe('A song', () => {
 
     describe ('title', () => {
         it('represents the title field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, 'Graceland');
+            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, 'Graceland');
             expect(song.title).to.equal('Graceland');
         });
 
         it('provides a default value if omitted', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.title).to.equal('Title Unavailable');
         });
     });
 
     describe ('artist', () => {
         it('represents the artist field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, 'Paul Simon');
+            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, 'Paul Simon');
             expect(song.artist).to.equal('Paul Simon');
         });
 
         it('defaults to "Unknown Artist"', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.artist).to.equal('Unknown Artist');
         });
     });
 
     describe ('album', () => {
         it('represents the album field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, undefined, 'Graceland');
+            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, 'Graceland');
             expect(song.album).to.equal('Graceland');
         });
 
         it('defaults to "Unknown Album"', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.album).to.equal('Unknown Album');
         });
     });
 
     describe ('genre', () => {
         it('represents the genre field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{}, undefined, undefined, undefined, undefined, 'Pop/Worldbeat');
+            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, undefined, 'Pop/Worldbeat');
             expect(song.genre).to.equal('Pop/Worldbeat');
         });
 
         it('defaults to "Unknown Genre"', () => {
-            const song = new Song('song.mp3', 30, <MediaProvider>{});
+            const song = new Song('song.mp3', 30, <AudioSource>{});
             expect(song.genre).to.equal('Unknown Genre');
         });
     });
 
     describe('getAudio method', () => {
         it('provides an audio retrieval strategy stream for a given song', () => {
-            const mockAdapter : TypeMoq.IMock<MediaProvider> = TypeMoq.Mock.ofType<MediaProvider>();
+            const mockAdapter : TypeMoq.IMock<AudioSource> = TypeMoq.Mock.ofType<AudioSource>();
             mockAdapter
                 .setup(mockAdapter => mockAdapter.getAudio('song.mp3'))
                 .returns(() => new Promise<Readable>(() => {}));
