@@ -1,9 +1,3 @@
-/// <reference path="../node_modules/@types/mocha/index.d.ts" />
-/// <reference path="../node_modules/@types/chai/index.d.ts" />
-
-/**
- * Module dependencies.
- */
 import * as chai from 'chai';
 import * as TypeMoq from 'typemoq';
 import {Readable} from 'stream';
@@ -11,14 +5,8 @@ import {Readable} from 'stream';
 import Song from '../src/Song';
 import AudioSource from '../src/media_providers/AudioSource';
 
-/**
- * Globals
- */
 const expect = chai.expect;
 
-/**
- * Unit tests
- */
 describe('A song', () => {
 
     describe('identifier', () => {

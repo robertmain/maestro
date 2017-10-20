@@ -1,16 +1,8 @@
-/// <reference path="../../../node_modules/@types/mocha/index.d.ts" />
-/// <reference path="../../../node_modules/@types/chai/index.d.ts" />
-
-/**
-* Module dependencies.
-*/
 import * as chai from 'chai';
 import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
 import {Readable}  from 'stream';
 
-// Mocked out filesystem for testing. Must go before the import of `DiskAdapter` in order to
-// intercept the call to `fs` and replace it with our mock
 mock('fs', {
     existsSync: (path : any) => {
         return path.match(/exists/);
@@ -23,9 +15,6 @@ mock('fs', {
 delete require.cache[require.resolve('../../../src/media_providers/disk/DiskSource')];
 import DiskSource from '../../../src/media_providers/disk/DiskSource';
 
-/**
-* Globals
-*/
 const expect = chai.expect;
 chai.use(chai_as_promised);
 
