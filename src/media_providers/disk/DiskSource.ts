@@ -10,7 +10,7 @@ export default class DiskSource implements AudioSource {
             if(fs.existsSync(file_path)) {
                 resolve(fs.createReadStream(file_path));
             } else {
-                reject('unable to find file: ' + file_path  + ' on disk');
+                reject(Error('unable to find file: ' + file_path  + ' on disk'));
             }
         })
     }

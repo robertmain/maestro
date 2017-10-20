@@ -28,7 +28,7 @@ import DiskSource from '../../../src/media_providers/disk/DiskSource';
 const expect = chai.expect;
 chai.use(chai_as_promised);
 
-describe('Disk adapter', () => {
+describe('Disk source', () => {
 
     it('is able to retrieve song files from disk', () => {
         const da       = new DiskSource();
@@ -44,7 +44,7 @@ describe('Disk adapter', () => {
     it('fails to find non-existant files', () => {
         const da = new DiskSource();
 
-        return expect(da.getAudio('no.wav')).to.eventually.be.rejected;
+        return expect(da.getAudio('no.wav')).to.eventually.be.rejectedWith(Error, 'unable to find file: no.wav on disk');
     });
 });
 

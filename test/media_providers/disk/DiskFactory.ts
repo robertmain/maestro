@@ -45,7 +45,7 @@ import Song from '../../../src/Song';
 const expect = chai.expect;
 chai.use(chai_as_promised);
 
-describe('Disk strategy', () => {
+describe('Disk factory', () => {
     it('provides correctly constructed songs', () => {
         const df  = new DiskFactory('my_music');
 
