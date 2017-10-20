@@ -20,7 +20,7 @@ mock('fs', {
     }
 });
 
-import DiskAdapter from '../../../src/media_providers/disk/DiskAdapter';
+import DiskSource from '../../../src/media_providers/disk/DiskSource';
 
 /**
 * Globals
@@ -31,7 +31,7 @@ chai.use(chai_as_promised);
 describe('Disk adapter', () => {
 
     it('is able to retrieve song files from disk', () => {
-        const da       = new DiskAdapter();
+        const da       = new DiskSource();
         const songName = 'thissongexists.mp3';
 
         return Promise.all([
@@ -42,7 +42,7 @@ describe('Disk adapter', () => {
     });
 
     it('fails to find non-existant files', () => {
-        const da = new DiskAdapter();
+        const da = new DiskSource();
 
         return expect(da.getAudio('no.wav')).to.eventually.be.rejected;
     });

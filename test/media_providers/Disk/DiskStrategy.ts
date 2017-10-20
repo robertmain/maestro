@@ -36,7 +36,7 @@ mock('fluent-ffmpeg',  (path : string) => {
     }
 });
 
-import DiskSongFactory from '../../../src/media_providers/disk/DiskStrategy';
+import DiskFactory from '../../../src/media_providers/disk/DiskFactory';
 import Song from '../../../src/Song';
 
 /**
@@ -47,7 +47,7 @@ chai.use(chai_as_promised);
 
 describe('Disk strategy', () => {
     it('provides correctly constructed songs', () => {
-        const df  = new DiskSongFactory('my_music');
+        const df  = new DiskFactory('my_music');
 
         const song = df.getSong('songexists.mp3');
 
@@ -64,7 +64,7 @@ describe('Disk strategy', () => {
     });
 
     it('reports errors when trying to find song on disk', () => {
-        const df = new DiskSongFactory('my_music');
+        const df = new DiskFactory('my_music');
 
         const song = df.getSong('no.wav');
 
