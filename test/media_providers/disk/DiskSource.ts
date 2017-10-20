@@ -20,6 +20,7 @@ mock('fs', {
     }
 });
 
+delete require.cache[require.resolve('../../../src/media_providers/disk/DiskSource')];
 import DiskSource from '../../../src/media_providers/disk/DiskSource';
 
 /**
