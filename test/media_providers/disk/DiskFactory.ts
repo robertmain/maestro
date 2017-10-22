@@ -46,13 +46,13 @@ describe('Disk factory', () => {
 
         return Promise.all([
             expect(song).to.be.instanceOf(Promise),
-            expect(song).to.eventually.be.instanceof(Song).with.property('identifier', 'my_music' + path.sep + 'songexists.mp3'),
+            expect(song).to.eventually.be.instanceof(Song).with.property('identifier', 'songexists.mp3'),
             expect(song).to.eventually.be.instanceof(Song).with.property('title', 'Test Title'),
             expect(song).to.eventually.be.instanceof(Song).with.property('duration', 200),
             expect(song).to.eventually.be.instanceof(Song).with.property('sample_rate', 44100),
             expect(song).to.eventually.be.instanceof(Song).with.property('artist', 'My Artist'),
             expect(song).to.eventually.be.instanceof(Song).with.property('album', 'My Album'),
-            expect(song).to.eventually.be.instanceof(Song).with.property('genre', 'Example Genre')
+            expect(song).to.eventually.be.instanceof(Song).with.deep.property('genre', ['Example Genre'])
         ]);
     });
 

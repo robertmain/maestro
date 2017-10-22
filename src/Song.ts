@@ -7,11 +7,11 @@ export default class Song{
         readonly identifier     : string,
         readonly duration       : number,
         readonly audio_source   : AudioSource,
-        readonly sample_rate    : number = 44100,
-        readonly title          : string = 'Title Unavailable',
-        readonly artist         : string = 'Unknown Artist',
-        readonly album          : string = 'Unknown Album',
-        readonly genre          : string = 'Unknown Genre'
+        readonly sample_rate    : number        = 44100,
+        readonly title          : string        = 'Title Unavailable',
+        readonly artist         : string        = 'Unknown Artist',
+        readonly album          : string        = 'Unknown Album',
+        readonly genre          : Array<String> = ['Unknown Genre']
     ){
 
     }

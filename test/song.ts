@@ -96,13 +96,13 @@ describe('A song', () => {
 
     describe ('genre', () => {
         it('represents the genre field of song metadata', () => {
-            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, undefined, 'Pop/Worldbeat');
-            expect(song.genre).to.equal('Pop/Worldbeat');
+            const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, undefined, ['Pop/Worldbeat']);
+            expect(song.genre).to.deep.equal(['Pop/Worldbeat']);
         });
 
         it('defaults to "Unknown Genre"', () => {
             const song = new Song('song.mp3', 30, <AudioSource>{});
-            expect(song.genre).to.equal('Unknown Genre');
+            expect(song.genre).to.deep.equal(['Unknown Genre']);
         });
     });
 
