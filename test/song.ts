@@ -3,7 +3,7 @@ import * as TypeMoq from 'typemoq';
 import {Readable} from 'stream';
 
 import Song from '../src/Song';
-import AudioSource from '../src/media_providers/AudioSource';
+import AudioSource from '../src/api/services/media_providers/AudioSource';
 
 const expect = chai.expect;
 
