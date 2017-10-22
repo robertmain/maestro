@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend for node jukebox",
-  "main": "dist/example.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "nyc --all _mocha --require ts-node/register -R spec test/**/*.ts",
     "__coverage": "rm -rf coverage && nyc report",
@@ -20,12 +20,15 @@
     "url": "git@github.com:robertmain/jukebox.git"
   },
   "dependencies": {
+    "@types/express": "^4.0.37",
     "@types/fluent-ffmpeg": "^2.1.6",
     "@types/node": "^10.3.0",
     "@types/sql.js": "0.0.29",
+    "express": "^4.16.2",
+    "express-jsonschema": "^1.1.6",
     "fluent-ffmpeg": "^2.1.2",
     "speaker": "^0.4.1",
-    "sql.js": "^0.5.0"
+    "socket.io": "^2.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
