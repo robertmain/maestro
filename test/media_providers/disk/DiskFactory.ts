@@ -1,7 +1,6 @@
 import * as chai from 'chai';
 import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
-import * as path from 'path';
 
 mock('fluent-ffmpeg',  (path : string) => {
     return {
@@ -30,7 +29,7 @@ mock('fluent-ffmpeg',  (path : string) => {
     }
 });
 
-import DiskFactory from '../../../src/media_providers/disk/DiskFactory';
+import DiskFactory from '../../../src/api/services/media_providers/disk/DiskFactory';
 import Song from '../../../src/Song';
 
 /**

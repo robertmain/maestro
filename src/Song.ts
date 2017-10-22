@@ -1,5 +1,5 @@
-import AudioSource from "./media_providers/AudioSource"
-import { Readable } from "stream";
+import AudioSource from './api/services/media_providers/AudioSource'
+import { Readable } from 'stream';
 
 export default class Song{
 
