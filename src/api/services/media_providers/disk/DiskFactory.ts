@@ -15,16 +15,16 @@ export default class DiskFactory implements AudioFactory{
             if (err) {
                 reject(err)
             } else {
-                let id3_data = stream_metadata.format.tags;
+                let id3_data = stream_metadata.format.tags || {};
                 resolve(new Song(
                     file_path,
                     stream_metadata.streams[0].duration,
-                    new DiskSource(),
+                    this._disk_source,
                     stream_metadata.streams[0].sample_rate,
-                    id3_data.title,
-                    id3_data.artist,
-                    id3_data.album,
-                    id3_data.genre.split(';')
+                    id3_data.title || undefined,
+                    id3_data.artist || undefined,
+                    id3_data.album || undefined,
+                    (typeof id3_data.genre === 'undefined') ? undefined : id3_data.genre.split(';')
                 ));
             }
         }))
