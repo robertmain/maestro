@@ -1,8 +1,11 @@
 import * as fs from 'fs';
 import { Readable } from 'stream';
+import { injectable } from "inversify";
+import "reflect-metadata";
 
 import AudioSource from '../AudioSource';
 
+@injectable()
 export default class DiskSource implements AudioSource {
 
     public getAudio(file_path : string): Promise<Readable> {

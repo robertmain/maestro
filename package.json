@@ -28,7 +28,9 @@
     "express-jsonschema": "^1.1.6",
     "fluent-ffmpeg": "^2.1.2",
     "speaker": "^0.4.1",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "inversify": "^4.3.0",
+    "reflect-metadata": "^0.1.10"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",

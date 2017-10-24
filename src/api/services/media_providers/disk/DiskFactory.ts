@@ -1,13 +1,23 @@
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as path from 'path';
+import { injectable, inject} from "inversify";
+import "reflect-metadata";
 
 import AudioFactory from '../AudioFactory';
+import AudioSource from '../AudioSource';
+import { TYPES } from '../../../../Types';
 import Song from '../../../../Song';
-import DiskSource from './DiskSource';
 
+@injectable()
 export default class DiskFactory implements AudioFactory{
 
-    constructor(readonly songs_directory : string){
+    private _disk_source : AudioSource;
+
+    constructor(
+        readonly songs_directory : string,
+        @inject(TYPES.AudioSource) DiskSource : AudioSource,
+    ){
+        this._disk_source = DiskSource;
     }
 
     public getSong(file_path: string): Promise<Song> {
