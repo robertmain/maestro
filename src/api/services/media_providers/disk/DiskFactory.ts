@@ -11,17 +11,11 @@ import Song from '../../../../Song';
 @injectable()
 export default class DiskFactory implements AudioFactory{
 
-    private _disk_source : AudioSource;
-
-    constructor(
-        readonly songs_directory : string,
-        @inject(TYPES.AudioSource) DiskSource : AudioSource,
-    ){
-        this._disk_source = DiskSource;
-    }
+    @inject(TYPES.AudioSource) private _disk_source : AudioSource
+    @inject(TYPES.Config) private _config : any
 
     public getSong(file_path: string): Promise<Song> {
-        return new Promise((resolve, reject) => ffmpeg(this.songs_directory + path.sep + file_path).ffprobe( (err, stream_metadata) => {
+        return new Promise((resolve, reject) => ffmpeg(this._config.adapters.disk.songs_directory + path.sep + file_path).ffprobe( (err, stream_metadata) => {
             if (err) {
                 reject(err)
             } else {
