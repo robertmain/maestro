@@ -1,20 +1,19 @@
 import * as express from 'express';
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
+import { interfaces, controller, httpGet } from 'inversify-express-utils';
 import "reflect-metadata";
 
 import AudioFactory from '../services/media_providers/AudioFactory';
 import { TYPES } from '../../Types';
 
-export default class Song {
-    private _df : AudioFactory;
+@injectable()
+@controller('/songs')
+export default class Song  implements interfaces.Controller{
 
-    public constructor(
-        @inject(TYPES.AudioFactory) DiskFactory : AudioFactory,
-    ) {
-        this._df = DiskFactory;
-    }
+    public constructor(@inject(TYPES.AudioFactory) private _df : AudioFactory) {}
 
-    public getSong (req : express.Request, res : express.Response) : void {
+    @httpGet('/')
+    public testing (req : express.Request, res : express.Response) {
         let song_name = req.params['song_name'];
         let song      = this._df.getSong(req.params['song_name']);
 

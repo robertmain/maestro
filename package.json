@@ -28,6 +28,7 @@
     "express-jsonschema": "^1.1.6",
     "fluent-ffmpeg": "^2.1.2",
     "inversify": "^4.3.0",
+    "inversify-express-utils": "^4.0.1",
     "reflect-metadata": "^0.1.10",
     "socket.io": "^2.0.3",
     "speaker": "^0.4.0"
