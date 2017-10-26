@@ -1,7 +1,6 @@
 import * as express from 'express';
 import { inject, injectable } from "inversify";
 import { interfaces, controller, httpGet, queryParam, response } from 'inversify-express-utils';
-import "reflect-metadata";
 
 import AudioFactory from '../services/media_providers/AudioFactory';
 import { TYPES } from '../../Types';
