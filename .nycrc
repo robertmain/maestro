@@ -13,7 +13,8 @@
     ],
     "exclude": [
         "src/**/*.d.ts",
-        "src/example.ts"
+        "src/index.ts",
+        "src/config.ts"
     ],
     "cache": false
 }
