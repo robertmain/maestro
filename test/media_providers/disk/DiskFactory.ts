@@ -1,6 +1,8 @@
 import * as chai from 'chai';
 import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
+import { Container } from 'inversify';
+import { TYPES } from '../../../src/Types';
 
 mock('fluent-ffmpeg',  (path : string) => {
     return {
@@ -30,6 +32,9 @@ mock('fluent-ffmpeg',  (path : string) => {
 });
 
 import DiskFactory from '../../../src/api/services/media_providers/disk/DiskFactory';
+import DiskSource from '../../../src/api/services/media_providers/disk/DiskSource';
+import AudioFactory from '../../../src/api/services/media_providers/AudioFactory';
+import AudioSource from '../../../src/api/services/media_providers/AudioSource';
 import Song from '../../../src/Song';
 
 /**
@@ -39,10 +44,26 @@ const expect = chai.expect;
 chai.use(chai_as_promised);
 
 describe('Disk factory', () => {
-    it('provides correctly constructed songs', () => {
-        const df  = new DiskFactory('my_music');
 
-        const song = df.getSong('songexists.mp3');
+    let container   : Container;
+    let disk_factory: AudioFactory;
+
+    beforeEach(() => {
+        container = new Container;
+        container.bind<AudioFactory>(TYPES.AudioFactory).to(DiskFactory);
+        container.bind<AudioSource>(TYPES.AudioSource).to(DiskSource);
+        container.bind(TYPES.Config).toConstantValue({
+            "adapters": {
+                "disk": {
+                    "songs_directory": "C:\\some\\random\\directory"
+                }
+            }
+        });
+        disk_factory   = container.get<AudioFactory>(TYPES.AudioFactory);
+    })
+
+    it('provides correctly constructed songs', () => {
+        const song = disk_factory.getSong('songexists.mp3');
 
         return Promise.all([
             expect(song).to.be.instanceOf(Promise),
@@ -56,10 +77,8 @@ describe('Disk factory', () => {
         ]);
     });
 
-    it('reports errors when trying to find song on disk', () => {
-        const df = new DiskFactory('my_music');
-
-        const song = df.getSong('no.wav');
+    it('reports errors when trying to find an invalid song on disk', () => {
+        const song = disk_factory.getSong('no.wav');
 
         return expect(song).to.eventually.be.rejectedWith(Error, 'unable to find file on disk');
     });
