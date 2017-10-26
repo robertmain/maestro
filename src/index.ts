@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { Container } from 'inversify';
 import { interfaces as IExpressUtils, InversifyExpressServer, TYPE } from 'inversify-express-utils';
 
