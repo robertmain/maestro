@@ -1,24 +1,21 @@
-import * as express from 'express';
 import { inject, injectable } from "inversify";
-import { interfaces, controller, httpGet, queryParam, response } from 'inversify-express-utils';
+import { interfaces, controller } from 'inversify-express-utils';
 
 import AudioFactory from '../services/media_providers/AudioFactory';
 import { TYPES } from '../../Types';
 
 @injectable()
-@controller('/song')
-export default class Song  implements interfaces.Controller{
+@controller('Song')
+export default class Song implements interfaces.Controller {
 
-    public constructor(@inject(TYPES.AudioFactory) private _df : AudioFactory) {}
+    public constructor( @inject(TYPES.AudioFactory) private _audio_factory: AudioFactory) { }
 
-    @httpGet('/')
-    public getSong (@queryParam("song_name") song_name : string, @response() res : express.Response) {
-        let song = this._df.getSong(song_name);
+    public getSong(args: any, callback: Function) {
+        let song = this._audio_factory.getSong(args.song_name);
 
-        song.then((song) => res.json(song));
-        song.catch((e : Error) => {
-            console.log(e.message);
-            res.send('Something broke....');
+        song.then((song) => callback(null, song));
+        song.catch((error: Error) => {
+            callback(error);
         });
     }
 }
