@@ -11,7 +11,7 @@
     "codecov": "npm run coverage:json && codecov -f coverage/*.json",
     "prebuild": "rm -rf dist",
     "build": "tsc",
-    "start": "node $npm_package_main",
+    "start": "npm run build && node $npm_package_main",
     "prepublish": "npm run build"
   },
   "author": "Robert Main",
@@ -20,17 +20,22 @@
     "type": "git",
     "url": "git@github.com:robertmain/jukebox.git"
   },
-  "license": "ISC",
   "dependencies": {
+    "@types/body-parser": "^1.16.7",
     "@types/express": "^4.0.37",
     "@types/fluent-ffmpeg": "^2.1.4",
+    "@types/inversify": "^2.0.33",
+    "@types/inversify-express-utils": "^2.0.0",
     "@types/node": "^8.0.33",
+    "@types/socket.io": "^1.4.31",
     "@types/sql.js": "0.0.29",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "express-jsonschema": "^1.1.6",
     "fluent-ffmpeg": "^2.1.2",
-    "inversify": "^4.3.0",
-    "inversify-express-utils": "^4.0.1",
+    "inversify": "^4.5.0",
+    "inversify-express-utils": "^4.1.0",
+    "jayson": "^2.0.4",
+    "redux": "^3.7.2",
     "reflect-metadata": "^0.1.10",
     "socket.io": "^2.0.3",
     "speaker": "^0.4.0"
@@ -52,7 +57,7 @@
     "typemoq": "^2.0.1",
     "typescript": "^2.5.3"
   },
-  "engines" : {
-    "node" : ">=6"
-   }
+  "engines": {
+    "node": ">=6"
+  }
 }
