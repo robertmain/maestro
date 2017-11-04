@@ -3,7 +3,8 @@ import { Container } from 'inversify';
 import { interfaces as IExpressUtils, InversifyExpressServer, TYPE } from 'inversify-express-utils';
 import * as bodyParser from 'body-parser';
 import * as jayson from 'jayson';
-import * as socket from 'socket.io';
+import { Server } from 'http';
+import * as socketio from 'socket.io';
 
 import Song from './api/controllers/Song';
 import { TYPES } from './Types';
@@ -27,21 +28,28 @@ let ExpressServer = new InversifyExpressServer(container);
 /// Server Bootstrapping
 /////////////////////////////////////////////////////////////////////
 
-//Spin up an RPC server
+// RPC server
 let RPCServer = jayson.server({
     getSong: (args: any, cb: Function) => songController.getSong(args, cb)
 });
 
-//Bring up the express HTTP server
+// Inversify Express server
 ExpressServer
     .setConfig((app) => {
         app.use(bodyParser.json())
         app.use(RPCServer.middleware())
     })
-    .build()
-    .listen(config.webServer.port, config.webServer.bind_address, () => {
-        console.log('Now listening on ' + config.webServer.bind_address + ':' + config.webServer.port);
-    });
 
-//Bootstrap our socket.io server
-socket(config.webServer.port);
+// Construct a new raw HTTP server to bind socket.io to
+const http = new Server(<any>ExpressServer.build());
+http.listen({host: config.webServer.bind_address, port: config.webServer.port}, () => {
+    console.log('Now listening on ' + config.webServer.bind_address + ':' + config.webServer.port);
+});
+
+// Socket.io Server
+const socket = socketio(http);
+socket.on("connection", function (connection) {
+    connection.on("rpc", (_rpc) => {
+
+    });
+});
