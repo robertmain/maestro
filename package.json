@@ -20,7 +20,7 @@
     "url": "git@github.com:robertmain/jukebox.git"
   },
   "dependencies": {
-    "@types/fluent-ffmpeg": "^2.1.5",
+    "@types/fluent-ffmpeg": "^2.1.6",
     "@types/node": "^8.0.58",
     "@types/sql.js": "0.0.29",
     "fluent-ffmpeg": "^2.1.2",
