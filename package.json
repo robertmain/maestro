@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@types/fluent-ffmpeg": "^2.1.6",
-    "@types/node": "^8.5.2",
+    "@types/node": "^8.5.5",
     "@types/sql.js": "0.0.29",
     "fluent-ffmpeg": "^2.1.2",
     "speaker": "^0.4.0",
