@@ -30,7 +30,8 @@ let ExpressServer = new InversifyExpressServer(container);
 
 // RPC server
 let RPCServer = jayson.server({
-    getSong: (args: any, cb: Function) => songController.getSong(args, cb)
+    getSong: (args: any, cb: Function) => songController.getSong(args, cb),
+    listSongs: (args: any, cb: Function) => songController.listSongs(args, cb)
 });
 
 // Inversify Express server

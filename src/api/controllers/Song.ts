@@ -18,4 +18,13 @@ export default class Song implements interfaces.Controller {
             callback(error);
         });
     }
+
+    public listSongs(args: any, callback: Function) {
+        let song = this._audio_factory.listSongs(args.song_name);
+
+        song.then((song) => {console.log(song);callback(null, song);});
+        song.catch((error: Error) => {
+            callback(error);
+        });
+    }
 }
