@@ -39,7 +39,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
     "mock-require": "^3.0.2",
-    "nyc": "^11.6.0",
+    "nyc": "^11.7.1",
     "ts-node": "^5.0.1",
     "typemoq": "^2.1.0",
     "typescript": "^2.8.3"
