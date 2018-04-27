@@ -35,7 +35,7 @@
     "@types/mock-require": "^2.0.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "codecov": "^3.0.0",
+    "codecov": "^3.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
     "mock-require": "^3.0.2",
