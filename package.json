@@ -40,7 +40,7 @@
     "mocha": "^5.2.0",
     "mock-require": "^3.0.2",
     "nyc": "^11.8.0",
-    "ts-node": "^6.0.3",
+    "ts-node": "^6.0.5",
     "typemoq": "^2.1.0",
     "typescript": "^2.8.3"
   }
