@@ -15,7 +15,7 @@
     "prepublish": "npm run build"
   },
   "author": "Robert Main",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:robertmain/jukebox.git"
