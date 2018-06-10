@@ -30,9 +30,9 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 ### Mac OS X
 
 #### OS X version 10.11 and up
-1. FFmpeg - If you haven't yet, install [Homebrew](https://brew.sh), then run `brew install ffmpeg`.
-1. Speaker - If you haven't, install Node and npm using homebrew again --> `brew install node`. Then run `sudo npm install speaker`.
-1. GCC Compiler - Install the [Xcode Command Line Tools](https://bit.ly/10L7gE7) which includes the GCC compiler.
+1. FFmpeg - Install using any of three options which can be found [here](https://superuser.com/a/624562). 
+1. Speaker - Install Node from [here](https://nodejs.org/en/download/)(or you can use Homebrew to install). Then run `sudo npm install speaker`.
+1. GCC Compiler - Install the [Xcode Command Line Tools](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) which includes the GCC compiler.
 
 ## Testing
 The tests can be run using `npm run test` and (optionally) `npm run coverage:html` to generate a code coverage report
