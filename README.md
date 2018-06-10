@@ -30,7 +30,7 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 ### Mac OS X
 
 #### OS X version 10.11 and up
-1. FFmpeg - Install using any of three options which can be found [here](https://superuser.com/a/624562).
+1. FFmpeg - [from here](https://www.ffmpeg.org/download.html) (you can also use home brew).
 1. GCC Compiler - Install the [Xcode Command Line Tools](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) which includes the GCC compiler.
 
 ## Testing
