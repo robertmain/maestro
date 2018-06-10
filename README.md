@@ -27,5 +27,11 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 1. Speaker - `sudo apt-get install libasound2-dev`
 1. GCC Compiler - `sudo apt-get install gcc`
 
+### Mac OS X
+
+#### OS X version 10.11 and up
+1. FFmpeg - [from here](https://www.ffmpeg.org/download.html) (you can also use home brew).
+1. GCC Compiler - Install the [Xcode Command Line Tools](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/) which includes the GCC compiler.
+
 ## Testing
 The tests can be run using `npm run test` and (optionally) `npm run coverage:html` to generate a code coverage report
