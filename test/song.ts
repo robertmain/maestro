@@ -2,8 +2,8 @@ import * as chai from 'chai';
 import * as TypeMoq from 'typemoq';
 import {Readable} from 'stream';
 
-import Song from '../src/Song';
-import AudioSource from '../src/api/services/media_providers/AudioSource';
+import Song from 'Song';
+import AudioSource from 'media_providers/AudioSource';
 
 const expect = chai.expect;
 

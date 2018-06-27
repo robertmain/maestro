@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { interfaces, controller } from 'inversify-express-utils';
 
-import AudioFactory from '../services/media_providers/AudioFactory';
-import { TYPES } from '../../Types';
+import AudioFactory from 'media_providers/AudioFactory';
+import { TYPES } from 'Types';
 
 @injectable()
 @controller('Song')
