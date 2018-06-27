@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import * as chai_as_promised from 'chai-as-promised';
 import * as mock from 'mock-require';
 import { Container } from 'inversify';
-import { TYPES } from 'Types';
+import { TYPES } from '../../../../../src/Types';
 
 mock('fluent-ffmpeg',  (path : string) => {
     return {
@@ -31,11 +31,11 @@ mock('fluent-ffmpeg',  (path : string) => {
     }
 });
 
-import DiskFactory from 'media_providers/disk/DiskFactory';
-import DiskSource from 'media_providers/disk/DiskSource';
-import AudioFactory from 'media_providers/AudioFactory';
-import AudioSource from 'media_providers/AudioSource';
-import Song from 'Song';
+import DiskFactory from '../../../../../src/api/services/media_providers/disk/DiskFactory';
+import DiskSource from '../../../../../src/api/services/media_providers/disk/DiskSource';
+import AudioFactory from '../../../../../src/api/services/media_providers/AudioFactory';
+import AudioSource from '../../../../../src/api/services/media_providers/AudioSource';
+import Song from '../../../../../src/Song';
 
 /**
 * Globals
@@ -83,3 +83,4 @@ describe('Disk factory', () => {
         return expect(song).to.eventually.be.rejectedWith(Error, 'unable to find file on disk');
     });
 });
+

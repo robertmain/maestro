@@ -12,8 +12,8 @@ mock('fs', {
     }
 });
 
-delete require.cache[require.resolve('media_providers/disk/DiskSource')];
-import DiskSource from 'media_providers/disk/DiskSource';
+delete require.cache[require.resolve('../../../../../src/api/services/media_providers/disk/DiskSource')];
+import DiskSource from '../../../../../src/api/services/media_providers/disk/DiskSource';
 
 const expect = chai.expect;
 chai.use(chai_as_promised);
@@ -37,3 +37,4 @@ describe('Disk source', () => {
         return expect(da.getAudio('no.wav')).to.eventually.be.rejectedWith(Error, 'unable to find file: no.wav on disk');
     });
 });
+

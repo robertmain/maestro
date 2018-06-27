@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 import { injectable } from "inversify";
 import "reflect-metadata";
 
-import AudioSource from 'media_providers/AudioSource';
+import AudioSource from '../AudioSource';
 
 @injectable()
 export default class DiskSource implements AudioSource {

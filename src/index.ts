@@ -6,13 +6,13 @@ import * as jayson from 'jayson';
 import { Server } from 'http';
 import * as socketio from 'socket.io';
 
-import Song from 'Song';
-import { TYPES } from 'Types';
-import config from 'config';
-import AudioSource from 'media_providers/AudioSource';
-import AudioFactory from 'media_providers/AudioFactory';
-import DiskSource from 'media_providers/disk/DiskSource';
-import DiskFactory from 'media_providers/disk/DiskFactory';
+import Song from './api/controllers/Song';
+import { TYPES } from './Types';
+import config from './config';
+import AudioSource from './api/services/media_providers/AudioSource';
+import AudioFactory from './api/services/media_providers/AudioFactory';
+import DiskSource from './api/services/media_providers/disk/DiskSource';
+import DiskFactory from './api/services/media_providers/disk/DiskFactory';
 
 let container = new Container();
 

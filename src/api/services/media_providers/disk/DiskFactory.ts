@@ -3,10 +3,10 @@ import * as path from 'path';
 import { injectable, inject} from "inversify";
 import "reflect-metadata";
 
-import AudioFactory from 'media_providers/AudioFactory';
-import AudioSource from 'media_providers/AudioSource';
-import { TYPES } from 'Types';
-import Song from 'Song';
+import AudioFactory from '../AudioFactory';
+import AudioSource from '../AudioSource';
+import { TYPES } from '../../../../Types';
+import Song from '../../../../Song';
 
 @injectable()
 export default class DiskFactory implements AudioFactory{
