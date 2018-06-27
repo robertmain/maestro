@@ -11,7 +11,7 @@ import Song from '../../../../Song';
 @injectable()
 export default class DiskFactory implements AudioFactory{
 
-    @inject(TYPES.AudioSource) private _disk_source : AudioSource
+    @inject(TYPES.AudioSource) private _disk_source! : AudioSource
     @inject(TYPES.Config) private _config : any
 
     public getSong(file_path: string): Promise<Song> {
