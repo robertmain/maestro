@@ -38,12 +38,11 @@ ExpressServer
     .setConfig(app => {
         app.use(bodyParser.json())
         app.use(RPCServer.middleware())
-    })
+    });
 
 // Construct a new raw HTTP server to bind socket.io to
 const http = new Server(<any>ExpressServer.build());
-http.listen({host: config.http.bind_address, port: config.http.port}, () =>
-    console.log(`Now listening on ${config.http.bind_address}:${config.http.port}`));
+http.listen(config.http, () => console.log(`Now listening on ${config.http.host}:${config.http.port}`));
 
 // Socket.io Server
 socketio(http).on("connection", connection => {
