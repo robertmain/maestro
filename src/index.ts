@@ -35,20 +35,18 @@ let RPCServer = jayson.server({
 
 // Inversify Express server
 ExpressServer
-    .setConfig((app) => {
+    .setConfig(app => {
         app.use(bodyParser.json())
         app.use(RPCServer.middleware())
     })
 
 // Construct a new raw HTTP server to bind socket.io to
 const http = new Server(<any>ExpressServer.build());
-http.listen({host: config.webServer.bind_address, port: config.webServer.port}, () => {
-    console.log('Now listening on ' + config.webServer.bind_address + ':' + config.webServer.port);
-});
+http.listen({host: config.http.bind_address, port: config.http.port}, () =>
+    console.log(`Now listening on ${config.http.bind_address}:${config.http.port}`));
 
 // Socket.io Server
-const socket = socketio(http);
-socket.on("connection", function (connection) {
+socketio(http).on("connection", connection => {
     connection.on("rpc", (_rpc) => {
 
     });

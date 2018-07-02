@@ -1,5 +1,5 @@
 const config = {
-    webServer: {
+    http: {
         port: 3000,
         bind_address: '0.0.0.0'
     },
