@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import * as TypeMoq from 'typemoq';
-import {Readable} from 'stream';
+import { Readable } from 'stream';
 
 import Song from '../src/Song';
 import AudioSource from '../src/api/services/media_providers/AudioSource';
@@ -58,7 +58,7 @@ describe('A song', () => {
         });
     });
 
-    describe ('title', () => {
+    describe('title', () => {
         it('represents the title field of song metadata', () => {
             const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, 'Graceland');
             expect(song.title).to.equal('Graceland');
@@ -70,7 +70,7 @@ describe('A song', () => {
         });
     });
 
-    describe ('artist', () => {
+    describe('artist', () => {
         it('represents the artist field of song metadata', () => {
             const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, 'Paul Simon');
             expect(song.artist).to.equal('Paul Simon');
@@ -82,7 +82,7 @@ describe('A song', () => {
         });
     });
 
-    describe ('album', () => {
+    describe('album', () => {
         it('represents the album field of song metadata', () => {
             const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, 'Graceland');
             expect(song.album).to.equal('Graceland');
@@ -94,7 +94,7 @@ describe('A song', () => {
         });
     });
 
-    describe ('genre', () => {
+    describe('genre', () => {
         it('represents the genre field of song metadata', () => {
             const song = new Song('song.mp3', 30, <AudioSource>{}, undefined, undefined, undefined, undefined, ['Pop/Worldbeat']);
             expect(song.genre).to.deep.equal(['Pop/Worldbeat']);
@@ -108,7 +108,7 @@ describe('A song', () => {
 
     describe('getAudio method', () => {
         it('provides an audio retrieval strategy stream for a given song', () => {
-            const mockAdapter : TypeMoq.IMock<AudioSource> = TypeMoq.Mock.ofType<AudioSource>();
+            const mockAdapter: TypeMoq.IMock<AudioSource> = TypeMoq.Mock.ofType<AudioSource>();
             mockAdapter
                 .setup(mockAdapter => mockAdapter.getAudio('song.mp3'))
                 .returns(() => new Promise<Readable>(() => {}));
