@@ -31,7 +31,7 @@
     "@types/sql.js": "0.0.29",
     "fluent-ffmpeg": "^2.1.2",
     "inversify": "^4.13.0",
-    "inversify-express-utils": "^4.2.2",
+    "inversify-express-utils": "^6.1.0",
     "jayson": "^2.0.6",
     "redux": "^3.7.2",
     "reflect-metadata": "^0.1.12",
