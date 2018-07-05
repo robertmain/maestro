@@ -1,5 +1,5 @@
-import { Readable } from "stream";
+import { Readable } from 'stream';
 
 export default interface AudioSource {
-    getAudio(url : string) : Promise<Readable>;
+    getAudio(url: string): Promise<Readable>;
 }

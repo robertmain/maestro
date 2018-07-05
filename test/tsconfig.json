@@ -1,14 +1,16 @@
 {
-    "extends": "../tsconfig.json",
+    "extends": "./../tsconfig.json",
     "compilerOptions": {
         "noEmit": true,
         "types": [
             "jest",
             "node"
-        ]
+        ],
+        "baseUrl": "../src"
     },
+    "exclude": [],
     "include": [
-        "**/*.spec.ts",
-        "**/*.d.ts"
+        "**/*..ts",
+        "**/*..d.ts"
     ]
 }
