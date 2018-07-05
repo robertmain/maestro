@@ -10,8 +10,7 @@
     "start:prod": "node dist/main.js",
     "start:hmr": "node dist/server",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:cov": "jest --coverage",
-    "test:unit": "jest --config ./test/unit/jest.json",
+    "test:unit": "jest",
     "test:e2e": "jest --config ./test/e2e/jest.json",
     "webpack": "webpack --config webpack.config.js"
   },
@@ -57,5 +56,28 @@
   },
   "engines": {
     "node": ">=8.9.0"
+  },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>/src/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts}"
+    ],
+    "testMatch": [
+      "<rootDir>/test/unit/**/*.spec.(t|j)s"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "<rootDir>/test/unit/coverage",
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "verbose": true
   }
 }
