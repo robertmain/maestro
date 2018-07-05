@@ -33,7 +33,7 @@
     "inversify": "^4.13.0",
     "inversify-express-utils": "^6.1.0",
     "jayson": "^2.0.6",
-    "redux": "^3.7.2",
+    "redux": "^4.0.0",
     "reflect-metadata": "^0.1.12",
     "socket.io": "^2.1.1",
     "speaker": "^0.4.1"
