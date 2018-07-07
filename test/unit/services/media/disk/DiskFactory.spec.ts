@@ -1,4 +1,4 @@
-import * as mock from 'mock-require';
+import mock from 'mock-require';
 
 mock('fluent-ffmpeg', (path: string) => {
     return {
@@ -27,31 +27,26 @@ mock('fluent-ffmpeg', (path: string) => {
     };
 });
 
-import DiskFactory from '../../../../../../src/api/services/media_providers/disk/DiskFactory';
-import DiskSource from '../../../../../../src/api/services/media_providers/disk/DiskSource';
-import AudioFactory from '../../../../../../src/api/services/media_providers/AudioFactory';
-import AudioSource from '../../../../../../src/api/services/media_providers/AudioSource';
-import Song from '../../../../../../src/Song';
+import DiskFactory from '../../../../../src/services/media/disk/DiskFactory';
+import DiskSource from '../../../../../src/services/media/disk/DiskSource';
+import AudioFactory from '../../../../../src/services/media/AudioFactory';
+import Song from '../../../../../src/Song';
 
-describe('Disk factory', () => {
+describe.skip('Disk factory', () => {
     let disk_factory: AudioFactory;
 
     beforeEach(() => {
-        container.bind(TYPES.Config).toConstantValue({
-            "adapters": {
-                "disk": {
-                    "songs_directory": "C:\\some\\random\\directory"
-                }
-            }
-        });
-        disk_factory = container.get<AudioFactory>(TYPES.AudioFactory);
+        disk_factory = new DiskFactory({
+            songs_directory: 'C:\\some\\random\\directory',
+        }, new DiskSource());
     });
 
     it('provides correctly constructed songs', () => {
         const song = disk_factory.getSong('songexists.mp3');
 
         return Promise.all([
-            expect(song).toBeInstanceOf(Song),
+            expect(song).toBeInstanceOf(Promise),
+            expect(song).resolves.toBeInstanceOf(Song),
             expect(song).resolves.toHaveProperty('identifier', 'songexists.mp3'), // .with.property('identifier', 'songexists.mp3'),
             expect(song).resolves.toHaveProperty('title', 'Test Title'),
             expect(song).resolves.toHaveProperty('duration', 200),
