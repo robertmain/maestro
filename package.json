@@ -9,9 +9,9 @@
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
     "start:hmr": "node dist/server",
-    "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "jest",
-    "test:e2e": "jest --config ./test/e2e/jest.json",
+    "test": "npm run unit && npm run e2e",
+    "unit": "jest",
+    "e2e": "jest --config ./test/e2e/jest.json",
     "webpack": "webpack --config webpack.config.js"
   },
   "author": "Robert Main",
