@@ -5,9 +5,9 @@ cache:
   directories:
     - node_modules
 node_js:
-  - "8"
-  - "7"
-  - "6"
+  - 10
+  - 9
+  - 8.9.0
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libasound2-dev
