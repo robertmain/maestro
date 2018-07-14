@@ -107,13 +107,13 @@ describe('A song', () => {
             const mockAdapter: TypeMoq.IMock<AudioSource> = TypeMoq.Mock.ofType<AudioSource>();
             mockAdapter
                 .setup(adapter => adapter.getAudio('song.mp3'))
-                .returns(() => new Promise<Readable>(() => {}));
+                .returns(() => new Readable());
 
             const song = new Song('song.mp3', 30, mockAdapter.object);
             const audio_promise = song.getAudio();
 
             mockAdapter.verify(adapter => adapter.getAudio('song.mp3'), TypeMoq.Times.once());
-            expect(audio_promise).toBeInstanceOf(Promise);
+            expect(audio_promise).toBeInstanceOf(Readable);
         });
     });
 

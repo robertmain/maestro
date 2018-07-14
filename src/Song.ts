@@ -18,7 +18,7 @@ export default class Song {
 
     }
 
-    public getAudio(): Promise<Readable> {
+    public getAudio(): Readable {
         return this.audio_source.getAudio(this.identifier);
     }
 }
