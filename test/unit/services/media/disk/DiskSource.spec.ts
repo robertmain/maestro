@@ -1,5 +1,5 @@
 import { Readable } from 'stream';
-import fs, { createReadStream } from 'fs';
+import fs from 'fs';
 
 import DiskSource from '../../../../../src/services/media/disk/DiskSource';
 

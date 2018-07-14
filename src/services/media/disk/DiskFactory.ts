@@ -1,4 +1,5 @@
-import * as ffmpeg from 'fluent-ffmpeg';
+// tslint:disable-next-line:no-var-requires
+const ffmpeg = require('fluent-ffmpeg');
 import * as path from 'path';
 
 import { Injectable, Module } from '@nestjs/common';
@@ -14,13 +15,12 @@ import Song from 'Song';
 export default class DiskFactory implements AudioFactory {
 
     constructor(
-        private readonly _config : any,
+        private readonly _config: any,
         private readonly _disk_source: DiskSource,
     ) { }
 
     public getSong(file_path: string): Promise<Song> {
-        const ffprobe = ffmpeg(this._config.songs_directory + path.sep + file_path).ffprobe;
-        return new Promise((resolve, reject) => ffprobe((err, stream_metadata) => {
+        return new Promise((resolve, reject) => ffmpeg.ffprobe(this._config.songs_directory + path.sep + file_path, (err, stream_metadata) => {
             if (err) {
                 reject(err);
             } else {
