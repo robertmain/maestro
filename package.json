@@ -12,7 +12,8 @@
     "test": "npm run unit && npm run e2e",
     "unit": "jest",
     "e2e": "jest --config ./test/e2e/jest.json",
-    "webpack": "webpack --config webpack.config.js"
+    "webpack": "webpack --config webpack.config.js",
+    "lint": "tslint -c tslint.json test/unit/**/*.ts src/**/*.ts"
   },
   "author": "Robert Main",
   "license": "MIT",
