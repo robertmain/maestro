@@ -13,7 +13,8 @@
     "unit": "jest",
     "e2e": "jest --config ./test/e2e/jest.json",
     "webpack": "webpack --config webpack.config.js",
-    "lint": "tslint -c tslint.json test/unit/**/*.ts src/**/*.ts"
+    "lint": "tslint -c tslint.json test/unit/**/*.ts src/**/*.ts",
+    "docs:code": "typedoc --out docs/code src/"
   },
   "author": "Robert Main",
   "license": "MIT",
@@ -48,6 +49,7 @@
     "ts-node": "^6.0.0",
     "tsconfig-paths": "^3.3.1",
     "tslint": "5.3.2",
+    "typedoc": "^0.11.1",
     "typemoq": "^2.1.0",
     "webpack": "^4.15.1",
     "webpack-cli": "^2.0.13",

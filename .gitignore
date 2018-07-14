@@ -1,30 +1,9 @@
-# Visual Studio code coverage results
 .nyc_output/
-*.coverage
-*.coveragexml
 coverage/
 .vscode/
-
-
-# NCrunch
-_NCrunch_*
-.*crunch*.local.xml
-nCrunchTemp_*
-
-# Web workbench (sass)
+.vs
 .sass-cache/
-
-# Visual Studio cache files
-# files ending in .cache can be ignored
-*.[Cc]ache
-# but keep track of directories ending in .cache
-!*.[Cc]ache/
-
-# Node.js Tools for Visual Studio
 node_modules/
-
-=======
-# Local
-docker-compose.yml
 .env
 dist
+docs
