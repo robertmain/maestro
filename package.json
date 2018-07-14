@@ -37,7 +37,7 @@
     "@types/jest": "^21.1.8",
     "@types/node": "^9.6.23",
     "@types/supertest": "^2.0.4",
-    "codecov": "^3.0.3",
+    "codecov": "^3.0.4",
     "jest": "^21.2.1",
     "nodemon": "^1.14.1",
     "prettier": "^1.11.1",
