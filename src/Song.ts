@@ -2,6 +2,13 @@ import { Readable } from 'stream';
 import { Injectable } from '@nestjs/common';
 import AudioSource from 'services/media/AudioSource';
 
+/**
+ * Provides an encapsulation layer for both song metadata and the audio stream of a given song.
+ *
+ * **Note:** It is highly recommended to use an [[AudioFactory]] implementation to instanciate this class rather than
+ *           doing it manually. This is to ensure that the correct metadata and audio stream retrieval method(s) are
+ *           bound correctly.
+ */
 @Injectable()
 export default class Song {
 

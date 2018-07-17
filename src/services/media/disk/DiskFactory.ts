@@ -1,3 +1,6 @@
+/**
+ * @hidden
+ */
 // tslint:disable-next-line:no-var-requires
 const ffmpeg = require('fluent-ffmpeg');
 import * as path from 'path';
@@ -7,20 +10,43 @@ import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
 import Song from 'Song';
 
+/**
+ * Instanciates [[Song]]s using audio from the filesytem and provides the file system strategy for audio and metadata
+ * retrieval
+ */
 @Module({
     providers: [DiskSource, Song],
 })
-
 @Injectable()
 export default class DiskFactory implements AudioFactory {
 
+    /**
+     * Create a new song factory instance that produces songs for files on the local filesystem
+
+     * @param {*}          _config      The contents of [[config.adapters.disk]]
+     * @param {DiskSource} _disk_source An implementation of [[AudioSource]] used to generate an audio stream for audio
+     *                                  from the local disk
+     *
+     * @memberof DiskFactory
+     */
     constructor(
         private readonly _config: any,
         private readonly _disk_source: DiskSource,
     ) { }
 
+    /**
+     * Instanciates a [[Song]] for you with the correct metadata and audio retrieval strategy bound. This implementation
+     * instanciates songs from the local disk.
+     *
+     * @param {string} file_path The path to a song relative to [[config.adapters.disk.songs_directory]]
+     *
+     * @returns {Promise<Song>}
+     *
+     * @memberof DiskFactory
+     */
     public getSong(file_path: string): Promise<Song> {
-        return new Promise((resolve, reject) => ffmpeg.ffprobe(this._config.songs_directory + path.sep + file_path, (err, stream_metadata) => {
+        const full_path = this._config.songs_directory + path.sep + file_path;
+        return new Promise((resolve, reject) => ffmpeg.ffprobe(full_path, (err, stream_metadata) => {
             if (err) {
                 reject(err);
             } else {
