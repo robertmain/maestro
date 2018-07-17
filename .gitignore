@@ -1,8 +1,7 @@
 .nyc_output/
 coverage/
 .vscode/
-.vs
-.sass-cache/
+.vs/
 node_modules/
 .env
 dist
