@@ -30,7 +30,7 @@
     "fastify-formbody": "^2.0.0",
     "reflect-metadata": "^0.1.12",
     "speaker": "^0.4.1",
-    "rxjs": "^6.0.0",
+    "rxjs": "^6.2.2",
     "typescript": "^2.9.1"
   },
   "devDependencies": {
