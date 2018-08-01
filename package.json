@@ -42,7 +42,7 @@
     "codecov": "^3.0.4",
     "jest": "^21.2.1",
     "nodemon": "^1.14.1",
-    "prettier": "^1.11.1",
+    "prettier": "^1.14.0",
     "supertest": "^3.0.0",
     "ts-jest": "^21.2.4",
     "ts-loader": "^4.1.0",
