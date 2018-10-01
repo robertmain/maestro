@@ -44,7 +44,7 @@
     "nodemon": "^1.18.3",
     "prettier": "^1.14.0",
     "supertest": "^3.0.0",
-    "ts-jest": "^21.2.4",
+    "ts-jest": "^23.10.3",
     "ts-loader": "^4.1.0",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.6.0",
