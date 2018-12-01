@@ -27,7 +27,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
-    "fastify-formbody": "^2.0.1",
+    "fastify-formbody": "^2.0.3",
     "reflect-metadata": "^0.1.12",
     "speaker": "^0.4.1",
     "rxjs": "^6.3.3",
