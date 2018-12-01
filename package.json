@@ -31,7 +31,7 @@
     "reflect-metadata": "^0.1.12",
     "speaker": "^0.4.1",
     "rxjs": "^6.3.3",
-    "typescript": "^3.0.1"
+    "typescript": "^3.2.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.4.0",
