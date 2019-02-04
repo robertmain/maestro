@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-module.exports = {
+module.exports =  ({ mode }) => ({
     entry: ['webpack/hot/poll?1000', './src/main.hmr.ts'],
     watch: true,
     target: 'node',
@@ -20,7 +20,7 @@ module.exports = {
             },
         ],
     },
-    mode: "development",
+    mode,
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
@@ -31,4 +31,4 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         filename: 'server.js',
     },
-};
+});
