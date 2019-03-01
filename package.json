@@ -22,7 +22,7 @@
     "url": "git@github.com:robertmain/jukebox.git"
   },
   "dependencies": {
-    "@nestjs/common": "^5.6.2",
+    "@nestjs/common": "^5.7.3",
     "@nestjs/core": "^5.6.2",
     "@types/fluent-ffmpeg": "^2.1.9",
     "fastify-formbody": "^2.1.0",
