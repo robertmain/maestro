@@ -10,9 +10,6 @@ module.exports = {
   "collectCoverageFrom": [
     "src/**/*.{ts}"
   ],
-  "testMatch": [
-    "<rootDir>/test/unit/**/*.spec.(t|j)s"
-  ],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },

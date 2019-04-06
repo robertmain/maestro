@@ -1,8 +1,8 @@
 import * as TypeMoq from 'typemoq';
 import { Readable } from 'stream';
 
-import Song from '../../src/Song';
-import AudioSource from '../../src/services/media/AudioSource';
+import Song from '../Song';
+import AudioSource from '../services/media/AudioSource';
 
 describe('A song', () => {
 

@@ -1,7 +1,7 @@
-import DiskFactory from '../../../../../src/services/media/disk/DiskFactory';
-import DiskSource from '../../../../../src/services/media/disk/DiskSource';
-import AudioFactory from '../../../../../src/services/media/AudioFactory';
-import Song from '../../../../../src/Song';
+import DiskFactory from '../DiskFactory';
+import DiskSource from '../DiskSource';
+import AudioFactory from '../../AudioFactory';
+import Song from '../../../../Song';
 import { Readable } from 'stream';
 // tslint:disable-next-line:no-var-requires
 const ffmpeg = require('fluent-ffmpeg');

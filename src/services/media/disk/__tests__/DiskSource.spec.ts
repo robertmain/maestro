@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 import fs from 'fs';
 
-import DiskSource from '../../../../../src/services/media/disk/DiskSource';
+import DiskSource from '../DiskSource';
 
 describe('Disk source', () => {
 
