@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 import { Injectable } from '@nestjs/common';
-import AudioSource from 'services/media/AudioSource';
+import AudioSource from './services/media/AudioSource';
 
 /**
  * Provides an encapsulation layer for both song metadata and the audio stream of a given song.
@@ -11,6 +11,14 @@ import AudioSource from 'services/media/AudioSource';
  */
 @Injectable()
 export default class Song {
+    public readonly identifier: string;
+    public readonly duration: number;
+    public readonly audioSource: AudioSource;
+    public readonly sampleRate: number;
+    public readonly title: string;
+    public readonly artist: string;
+    public readonly album: string;
+    public readonly genre: string[];
 
     /**
      *
@@ -23,9 +31,9 @@ export default class Song {
      *
      * @param identifier   Song identifier (for example the filename or URL)
      * @param duration     The duration of the song in seconds
-     * @param audio_source Every song should know how to play itself, so an implementation of [[AudioSource]] is
+     * @param audioSource Every song should know how to play itself, so an implementation of [[AudioSource]] is
      *                     attached to every song object facilitate this
-     * @param sample_rate  The sample rate of a song, this is usually safe to leave at 44100
+     * @param sampleRate  The sample rate of a song, this is usually safe to leave at 44100
      *                     (just pass `undefined` in and it will default to 44100)
      * @param title        The song title (song metadata - this is displayed to the user)
      * @param artist       The song artist (song metadata - this is displayed to the user)
@@ -34,16 +42,23 @@ export default class Song {
      *                     than one genre, which is why this is an array of strings, rather than just a string.
      */
     public constructor(
-        readonly identifier  : string,
-        readonly duration    : number,
-        readonly audio_source: AudioSource,
-        readonly sample_rate : number   = 44100,
-        readonly title       : string   = 'Title Unavailable',
-        readonly artist      : string   = 'Unknown Artist',
-        readonly album       : string   = 'Unknown Album',
-        readonly genre       : string[] = ['Unknown Genre'],
+        identifier: string,
+        duration: number,
+        audioSource: AudioSource,
+        sampleRate: number   = 44100,
+        title: string   = 'Title Unavailable',
+        artist: string   = 'Unknown Artist',
+        album: string   = 'Unknown Album',
+        genre: string[] = ['Unknown Genre'],
     ) {
-
+        this.identifier = identifier;
+        this.duration = duration;
+        this.audioSource = audioSource;
+        this.sampleRate = sampleRate;
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
     }
 
     /**
@@ -61,6 +76,6 @@ export default class Song {
      * @memberof Song
      */
     public getAudio(): Readable {
-        return this.audio_source.getAudio(this.identifier);
+        return this.audioSource.getAudio(this.identifier);
     }
 }

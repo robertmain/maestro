@@ -1,119 +1,164 @@
-import * as TypeMoq from 'typemoq';
+import { IMock, Mock, Times } from 'typemoq';
 import { Readable } from 'stream';
 
 import Song from '../Song';
 import AudioSource from '../services/media/AudioSource';
 
-describe('A song', () => {
+describe('A song', (): void => {
+    let mockAdapter: IMock<AudioSource>;
 
-    describe('identifier', () => {
-        const song = new Song('song.mp3', 30, {} as AudioSource);
+    beforeEach((): void => {
+        mockAdapter = Mock.ofType<AudioSource>();
+    });
 
-        it('represents the location of a single file', () => {
+    afterEach((): void => {
+        mockAdapter.reset();
+    });
+
+    describe('identifier', (): void => {
+        it('represents the location of a single file', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
             expect(song).toHaveProperty('identifier');
             expect(song.identifier).toBe('song.mp3');
             expect(typeof song.identifier).toBe('string');
         });
     });
 
-    describe('duration', () => {
-        const song = new Song('song.mp3', 30, {} as AudioSource);
-        it('represents the length of the song in seconds', () => {
+    describe('duration', (): void => {
+        it('represents the length of the song in seconds', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
+
             expect(song).toHaveProperty('duration');
             expect(song.duration).toBe(30);
             expect(song.duration).toBeGreaterThan(0);
         });
 
-        it('is an integral number', () => {
-            expect(Number.isInteger(song.duration)).toBeTruthy();
+        it('is an integral number', (): void => {
+            const {
+                duration,
+            } = new Song('song.mp3', 30, mockAdapter.object);
+
+            expect(Number.isInteger(duration)).toBeTruthy();
         });
     });
 
-    describe('stream adapter', () => {
-        const song = new Song('song.mp3', 30, {} as AudioSource);
-        it('provides a mechanism for audio retrieval', () => {
-            expect(song).toHaveProperty('audio_source');
+    describe('stream adapter', (): void => {
+        it('provides a mechanism for audio retrieval', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
+            expect(song).toHaveProperty('audioSource');
         });
     });
 
-    describe('sample rate', () => {
-        it('provides the song sample rate', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource, 30);
-            expect(song.sample_rate).toBeGreaterThan(0);
-            expect(song.sample_rate).toBe(30);
+    describe('sample rate', (): void => {
+        it('provides the song sample rate', (): void => {
+            const {
+                sampleRate,
+            } = new Song('song.mp3', 30, mockAdapter.object, 30);
+            expect(sampleRate).toBeGreaterThan(0);
+            expect(sampleRate).toBe(30);
         });
 
-        it('defaults to 44100', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
-            expect(song.sample_rate).toBe(44100);
+        it('defaults to 44100', (): void => {
+            const { sampleRate } = new Song('song.mp3', 30, mockAdapter.object);
+            expect(sampleRate).toBe(44100);
         });
 
-        it('is an integral number', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
-            expect(Number.isInteger(song.sample_rate)).toBeTruthy();
+        it('is an integral number', (): void => {
+            const { sampleRate } = new Song('song.mp3', 30, mockAdapter.object);
+            expect(Number.isInteger(sampleRate)).toBeTruthy();
         });
     });
 
-    describe('title', () => {
-        it('represents the title field of song metadata', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource, undefined, 'Graceland');
+    describe('title', (): void => {
+        it('represents the title field of song metadata', (): void => {
+            const song = new Song(
+                'song.mp3',
+                30,
+                mockAdapter.object,
+                undefined,
+                'Graceland'
+            );
             expect(song.title).toBe('Graceland');
         });
 
-        it('provides a default value if omitted', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
+        it('provides a default value if omitted', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
             expect(song.title).toBe('Title Unavailable');
         });
     });
 
-    describe('artist', () => {
-        it('represents the artist field of song metadata', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource, undefined, undefined, 'Paul Simon');
+    describe('artist', (): void => {
+        it('represents the artist field of song metadata', (): void => {
+            const song = new Song(
+                'song.mp3',
+                30,
+                mockAdapter.object,
+                undefined,
+                undefined,
+                'Paul Simon'
+            );
             expect(song.artist).toBe('Paul Simon');
         });
 
-        it('defaults to "Unknown Artist"', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
+        it('defaults to "Unknown Artist"', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
             expect(song.artist).toBe('Unknown Artist');
         });
     });
 
-    describe('album', () => {
-        it('represents the album field of song metadata', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource, undefined, undefined, undefined, 'Graceland');
+    describe('album', (): void => {
+        it('represents the album field of song metadata', (): void => {
+            const song = new Song(
+                'song.mp3',
+                30,
+                mockAdapter.object,
+                undefined,
+                undefined,
+                undefined,
+                'Graceland'
+            );
             expect(song.album).toBe('Graceland');
         });
 
-        it('defaults to "Unknown Album"', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
+        it('defaults to "Unknown Album"', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
             expect(song.album).toBe('Unknown Album');
         });
     });
 
-    describe('genre', () => {
-        it('represents the genre field of song metadata', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource, undefined, undefined, undefined, undefined, ['Pop/Worldbeat']);
+    describe('genre', (): void => {
+        it('represents the genre field of song metadata', (): void => {
+            const song = new Song(
+                'song.mp3',
+                30,
+                mockAdapter.object,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                ['Pop/Worldbeat']
+            );
             expect(song.genre).toMatchObject(['Pop/Worldbeat']);
         });
 
-        it('defaults to "Unknown Genre"', () => {
-            const song = new Song('song.mp3', 30, {} as AudioSource);
+        it('defaults to "Unknown Genre"', (): void => {
+            const song = new Song('song.mp3', 30, mockAdapter.object);
             expect(song.genre).toMatchObject(['Unknown Genre']);
         });
     });
 
-    describe('getAudio method', () => {
-        it('provides an audio retrieval strategy stream for a given song', () => {
-            const mockAdapter: TypeMoq.IMock<AudioSource> = TypeMoq.Mock.ofType<AudioSource>();
+    describe('getAudio method', (): void => {
+        it('provides an audio stream for a given song', (): void => {
             mockAdapter
-                .setup(adapter => adapter.getAudio('song.mp3'))
-                .returns(() => new Readable());
+                .setup((adapter): Readable => adapter.getAudio('song.mp3'))
+                .returns((): Readable => new Readable());
 
             const song = new Song('song.mp3', 30, mockAdapter.object);
-            const audio_promise = song.getAudio();
+            const audioPromise = song.getAudio();
 
-            mockAdapter.verify(adapter => adapter.getAudio('song.mp3'), TypeMoq.Times.once());
-            expect(audio_promise).toBeInstanceOf(Readable);
+            mockAdapter.verify((adapter): Readable =>
+                adapter.getAudio('song.mp3'), Times.once());
+            expect(audioPromise).toBeInstanceOf(Readable);
         });
     });
 

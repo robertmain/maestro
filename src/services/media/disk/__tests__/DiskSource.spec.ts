@@ -3,34 +3,32 @@ import fs from 'fs';
 
 import DiskSource from '../DiskSource';
 
-describe('Disk source', () => {
+describe('Disk source', (): void => {
 
-    it('is able to retrieve song files from disk', () => {
+    it('is able to retrieve song files from disk', (): void => {
         expect.assertions(1);
 
-        jest.spyOn(fs, 'createReadStream').mockImplementationOnce((filename: string) => {
-            return new Readable();
-        });
+        jest.spyOn(fs, 'createReadStream')
+            .mockImplementationOnce((): Readable => new Readable());
 
-        const disk_source = new DiskSource();
-        const audio = disk_source.getAudio('mysong.mp3');
+        const diskSource = new DiskSource();
+        const audio = diskSource.getAudio('mysong.mp3');
 
         expect(audio).toBeInstanceOf(Readable);
     });
 
-    it('fails to find non-existant files', done => {
+    it('fails to find non-existant files', (done): void => {
         expect.assertions(1);
 
-        const disk_source = new DiskSource();
+        const diskSource = new DiskSource();
 
-        const audio = disk_source.getAudio('no.wav');
+        const audio = diskSource.getAudio('no.wav');
 
-        audio.on('error', error => {
+        audio.on('error', (error): void => {
             expect(error.message).toContain('no such file or directory');
             done();
         });
     });
 
     afterEach(jest.clearAllMocks);
-
 });

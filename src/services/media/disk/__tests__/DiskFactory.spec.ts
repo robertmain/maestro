@@ -1,65 +1,65 @@
+const ffmpeg = require('fluent-ffmpeg');
+jest.mock('fluent-ffmpeg');
+
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
 import AudioFactory from '../../AudioFactory';
 import Song from '../../../../Song';
-import { Readable } from 'stream';
-// tslint:disable-next-line:no-var-requires
-const ffmpeg = require('fluent-ffmpeg');
 
-describe('Disk factory', () => {
-    let disk_factory: AudioFactory;
+describe('Disk factory', (): void => {
+    let diskFactory: AudioFactory;
 
-    beforeEach(() => {
-        disk_factory = new DiskFactory({
+    beforeEach((): void => {
+        diskFactory = new DiskFactory({
             songs_directory: 'C:\\some\\random\\directory',
         }, new DiskSource());
     });
 
-    it('provides correctly constructed songs', () => {
-        expect.assertions(9);
+    it('provides correctly constructed songs', async (): Promise<any> => {
+        expect.assertions(8);
 
-        jest.spyOn(ffmpeg, 'ffprobe').mockImplementationOnce((path: string, cb: any) => {
-            cb(null, {
-                format: {
-                    tags: {
-                        title: 'Test Title',
-                        artist: 'My Artist',
-                        album: 'My Album',
-                        genre: 'Example Genre',
+        jest.spyOn(ffmpeg, 'ffprobe')
+            .mockImplementationOnce((path: string, cb: Function): void => {
+                cb(null, {
+                    format: {
+                        tags: {
+                            title: 'Test Title',
+                            artist: 'My Artist',
+                            album: 'My Album',
+                            genre: 'Example Genre',
+                        },
                     },
-                },
-                streams: [
-                    {
-                        duration: 200,
-                    },
-                ],
+                    streams: [
+                        {
+                            duration: 200,
+                        },
+                    ],
+                });
             });
-        });
+        const song = await diskFactory.getSong('songexists.mp3');
 
-        const song = disk_factory.getSong('songexists.mp3');
-
-        return Promise.all([
-            expect(song).toBeInstanceOf(Promise),
-            expect(song).resolves.toBeInstanceOf(Song),
-            expect(song).resolves.toHaveProperty('identifier', 'songexists.mp3'),
-            expect(song).resolves.toHaveProperty('title', 'Test Title'),
-            expect(song).resolves.toHaveProperty('duration', 200),
-            expect(song).resolves.toHaveProperty('sample_rate', 44100),
-            expect(song).resolves.toHaveProperty('artist', 'My Artist'),
-            expect(song).resolves.toHaveProperty('album', 'My Album'),
-            expect(song).resolves.toHaveProperty('genre', ['Example Genre']),
-        ]);
+        expect(song).toBeInstanceOf(Song);
+        expect(song).toHaveProperty('identifier', 'songexists.mp3');
+        expect(song).toHaveProperty('title', 'Test Title');
+        expect(song).toHaveProperty('duration', 200);
+        expect(song).toHaveProperty('sampleRate', 44100);
+        expect(song).toHaveProperty('artist', 'My Artist');
+        expect(song).toHaveProperty('album', 'My Album');
+        expect(song).toHaveProperty('genre', ['Example Genre']);
     });
 
-    it('reports errors when trying to find an invalid song on disk', () => {
-        jest.spyOn(ffmpeg, 'ffprobe').mockImplementationOnce((path: string, cb: any) => {
-            cb(() => {
-                throw new Error('unable to find file on disk');
+    it('reports errors when trying to find an invalid song on disk', async (): Promise<any> => {
+        expect.assertions(1);
+
+        jest.spyOn(ffmpeg, 'ffprobe')
+            .mockImplementationOnce((path: string, cb: Function): void => {
+                cb('unable to find file on disk');
             });
-        });
 
-        const song = disk_factory.getSong('no.wav');
-
-        return expect(song).rejects.toThrowError('unable to find file on disk');
+        try{
+            await diskFactory.getSong('no.wav');
+        } catch (error) {
+            expect(error).toMatch('unable to find file on disk');
+        }
     });
 });

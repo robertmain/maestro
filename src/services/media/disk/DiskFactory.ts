@@ -1,14 +1,15 @@
 /**
  * @hidden
  */
-// tslint:disable-next-line:no-var-requires
 const ffmpeg = require('fluent-ffmpeg');
-import * as path from 'path';
+const probe = require('util').promisify(ffmpeg.ffprobe);
+import { sep } from 'path';
 
 import { Injectable, Module } from '@nestjs/common';
 import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
-import Song from 'Song';
+import Song from '../../../Song';
+import { config } from '../../../config';
 
 /**
  * Instanciates [[Song]]s using audio from the filesytem and provides the file system strategy for audio and metadata
@@ -20,49 +21,67 @@ import Song from 'Song';
 @Injectable()
 export default class DiskFactory implements AudioFactory {
 
+    private readonly _config: any;
+    private readonly _diskSource: DiskSource;
+
     /**
      * Create a new song factory instance that produces songs for files on the local filesystem
 
      * @param {*}          _config      The contents of [[config.adapters.disk]]
-     * @param {DiskSource} _disk_source An implementation of [[AudioSource]] used to generate an audio stream for audio
+     * @param {DiskSource} _diskSource An implementation of [[AudioSource]] used to generate an audio stream for audio
      *                                  from the local disk
      *
      * @memberof DiskFactory
      */
-    constructor(
-        private readonly _config: any,
-        private readonly _disk_source: DiskSource,
-    ) { }
+    public constructor(
+        _config: any,
+        _diskSource: DiskSource,
+    ) {
+        this._config = config;
+        this._diskSource = _diskSource;
+    }
 
     /**
      * Instanciates a [[Song]] for you with the correct metadata and audio retrieval strategy bound. This implementation
      * instanciates songs from the local disk.
      *
-     * @param {string} file_path The path to a song relative to [[config.adapters.disk.songs_directory]]
+     * @param {string} filePath The path to a song relative to [[config.adapters.disk.songs_directory]]
      *
      * @returns {Promise<Song>}
      *
      * @memberof DiskFactory
      */
-    public getSong(file_path: string): Promise<Song> {
-        const full_path = this._config.songs_directory + path.sep + file_path;
-        return new Promise((resolve, reject) => ffmpeg.ffprobe(full_path, (err, stream_metadata) => {
-            if (err) {
-                reject(err);
-            } else {
-                const id3_data = stream_metadata.format.tags || {};
-                resolve(new Song(
-                    file_path,
-                    stream_metadata.streams[0].duration,
-                    this._disk_source,
-                    stream_metadata.streams[0].sample_rate,
-                    id3_data.title || undefined,
-                    id3_data.artist || undefined,
-                    id3_data.album || undefined,
-                    (typeof id3_data.genre === 'undefined') ? undefined : id3_data.genre.split(';'),
-                ));
-            }
-        }));
+    public async getSong(filePath: string): Promise<Song> {
+        const fullPath = this._config.songs_directory + sep + filePath;
+
+        try{
+            const {
+                streams: [{
+                    duration,
+                    sample_rate: sampleRate,
+                }],
+                format: {
+                    tags: {
+                        title,
+                        artist,
+                        album,
+                        genre,
+                    },
+                },
+            } = await probe(fullPath);
+            return new Song(
+                filePath,
+                duration,
+                this._diskSource,
+                sampleRate,
+                title,
+                artist,
+                album,
+                (typeof genre === 'undefined') ? undefined : genre.split(';'),
+            );
+        } catch (error) {
+            throw error;
+        }
     }
 
 }
