@@ -51,7 +51,7 @@
     "tsconfig-paths": "^3.8.0",
     "typedoc": "^0.14.2",
     "typemoq": "^2.1.0",
-    "webpack": "^4.30.0",
+    "webpack": "^4.32.2",
     "webpack-cli": "^3.3.1",
     "webpack-node-externals": "^1.6.0"
   },
