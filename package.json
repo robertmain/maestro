@@ -46,7 +46,7 @@
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
     "ts-jest": "^21.2.4",
-    "ts-loader": "^6.2.0",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.4.1",
     "tsconfig-paths": "^3.9.0",
     "typedoc": "^0.15.0",
