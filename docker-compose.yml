@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  node:
+    build:
+      context: .
+      target: base
+    env_file: ./.env
+    user: "1000:1000"
+    ports:
+      - "127.0.0.1:${PORT}:${PORT}"
+      - "8000:8000"
+    volumes:
+      - ".:/node:rw"
+    command: ["npm", "run", "start:server:dev", "&", "npm", "run", "start:client:dev"]
