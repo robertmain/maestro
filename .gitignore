@@ -1,10 +1,8 @@
-# Visual Studio code coverage results
 .nyc_output/
-*.coverage
-*.coveragexml
 coverage/
 .vscode/
 .vs/
+.sass-cache/
 node_modules/
 .env
 dist

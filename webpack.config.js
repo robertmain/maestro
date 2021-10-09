@@ -1,34 +1,19 @@
-const webpack = require('webpack');
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const { config: server } = require('./src/server/webpack.config');
 
-module.exports = {
-    entry: ['webpack/hot/poll?1000', './src/main.hmr.ts'],
-    watch: true,
-    target: 'node',
-    externals: [
-        nodeExternals({
-            whitelist: ['webpack/hot/poll?1000'],
-        }),
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-        ],
+/**
+ * Webpack Build File
+ *
+ * This webpack configuration is used for only building the client and server
+ * bundles. It imports both of these from their respective directories, but
+ * allows for overrides if required.
+ *
+ * Other dev tools such as watching, hot module reloading etc. has been split
+ * out into other config files
+ *
+ * @param {object} env Webpack `env` object
+ */
+module.exports = ({ mode = 'development' } = {}) => ([
+    {
+        ...server({ mode }, process.env),
     },
-    mode: "development",
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-    ],
-    output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'server.js',
-    },
-};
+]);
