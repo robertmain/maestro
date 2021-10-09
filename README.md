@@ -25,7 +25,7 @@ A nodeJS youtube jukebox application. Great for parties and stuff :-)
 
 #### Debian/Ubuntu
 
-1. Avahi - `sudo apt-get install libavahi-compat-libdsnssd-dev`
+1. Avahi - `sudo apt-get install libavahi-common-dev`
 1. FFmpeg - `sudo apt-get install ffmpeg` (`sudo apt-get install libav` on older versions of Ubuntu)
 1. Speaker - `sudo apt-get install libasound2-dev`
 1. GCC Compiler - `sudo apt-get install gcc`
