@@ -20,6 +20,9 @@ export default class DiskSource implements AudioSource {
      * @memberof DiskSource
      */
     public getAudio(filePath: string): Readable {
+        if (!fs.existsSync(filePath)) {
+            throw new Error('No such file or directory');
+        }
         return fs.createReadStream(filePath);
     }
 }
