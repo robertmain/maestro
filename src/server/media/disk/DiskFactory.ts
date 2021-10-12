@@ -1,15 +1,17 @@
 /**
  * @hidden
  */
-const ffmpeg = require('fluent-ffmpeg');
-const probe = require('util').promisify(ffmpeg.ffprobe);
 import { sep } from 'path';
 
 import { Injectable, Module } from '@nestjs/common';
+import ffmpeg, { FfprobeData } from 'fluent-ffmpeg';
+import { promisify } from 'util';
 import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
-import Song from '../../../Song';
-import { config } from '../../../config';
+import Song from '../../Song';
+import { config } from '../../config';
+
+const probe = promisify(ffmpeg.ffprobe);
 
 /**
  * Instanciates [[Song]]s using audio from the filesytem and provides the file system strategy for audio and metadata
@@ -20,8 +22,8 @@ import { config } from '../../../config';
 })
 @Injectable()
 export default class DiskFactory implements AudioFactory {
-
     private readonly _config: any;
+
     private readonly _diskSource: DiskSource;
 
     /**
@@ -35,7 +37,7 @@ export default class DiskFactory implements AudioFactory {
      */
     public constructor(
         _config: any,
-        _diskSource: DiskSource,
+        _diskSource: DiskSource
     ) {
         this._config = config;
         this._diskSource = _diskSource;
@@ -52,36 +54,30 @@ export default class DiskFactory implements AudioFactory {
      * @memberof DiskFactory
      */
     public async getSong(filePath: string): Promise<Song> {
-        const fullPath = this._config.songs_directory + sep + filePath;
-
-        try{
-            const {
-                streams: [{
-                    duration,
-                    sample_rate: sampleRate,
-                }],
-                format: {
-                    tags: {
-                        title,
-                        artist,
-                        album,
-                        genre,
-                    },
-                },
-            } = await probe(fullPath);
-            return new Song(
-                filePath,
+        const fullPath = this._config.songsDirectory + sep + filePath;
+        const {
+            streams: [{
+                sample_rate: sampleRate,
+            }],
+            format: {
                 duration,
-                this._diskSource,
-                sampleRate,
-                title,
-                artist,
-                album,
-                (typeof genre === 'undefined') ? undefined : genre.split(';'),
-            );
-        } catch (error) {
-            throw error;
-        }
+                tags: {
+                    title,
+                    artist,
+                    album,
+                    genre,
+                },
+            },
+        } = await probe(fullPath) as FfprobeData;
+        return new Song(
+            filePath,
+            duration,
+            this._diskSource,
+            sampleRate,
+            title,
+            artist,
+            album,
+            (typeof genre === 'undefined') ? undefined : genre.split(';')
+        );
     }
-
 }

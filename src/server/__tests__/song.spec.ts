@@ -2,7 +2,7 @@ import { IMock, Mock, Times } from 'typemoq';
 import { Readable } from 'stream';
 
 import Song from '../Song';
-import AudioSource from '../services/media/AudioSource';
+import AudioSource from '../media/AudioSource';
 
 describe('A song', (): void => {
     let mockAdapter: IMock<AudioSource>;
@@ -156,10 +156,8 @@ describe('A song', (): void => {
             const song = new Song('song.mp3', 30, mockAdapter.object);
             const audioPromise = song.getAudio();
 
-            mockAdapter.verify((adapter): Readable =>
-                adapter.getAudio('song.mp3'), Times.once());
+            mockAdapter.verify((adapter): Readable => adapter.getAudio('song.mp3'), Times.once());
             expect(audioPromise).toBeInstanceOf(Readable);
         });
     });
-
 });

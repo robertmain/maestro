@@ -4,9 +4,6 @@ module.exports = {
     extends: [
         'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         'airbnb-base',
-    // 'plugin:vue/base',
-    // '@vue/airbnb',
-    // '@vue/typescript/recommended',
     ],
     env: {
         browser: true,
@@ -19,12 +16,15 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: [
-    // 'vue',
         '@typescript-eslint',
     ],
     rules: {
         '@typescript-eslint/indent': ['error', 4],
         'no-extra-semi': 'off',
+        'no-unused-vars': 'off',
+        semi: 'off',
+        '@typescript-eslint/semi': 'error',
+        '@typescript-eslint/no-unused-vars': 'error',
         indent: ['error', 4],
         'arrow-parens': ['warn', 'always'],
         'comma-dangle': [

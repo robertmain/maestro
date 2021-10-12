@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 import { Injectable } from '@nestjs/common';
-import AudioSource from './services/media/AudioSource';
+import AudioSource from './media/AudioSource';
 
 /**
  * Provides an encapsulation layer for both song metadata and the audio stream of a given song.
@@ -12,12 +12,19 @@ import AudioSource from './services/media/AudioSource';
 @Injectable()
 export default class Song {
     public readonly identifier: string;
+
     public readonly duration: number;
+
     public readonly audioSource: AudioSource;
+
     public readonly sampleRate: number;
+
     public readonly title: string;
+
     public readonly artist: string;
+
     public readonly album: string;
+
     public readonly genre: string[];
 
     /**
@@ -45,11 +52,11 @@ export default class Song {
         identifier: string,
         duration: number,
         audioSource: AudioSource,
-        sampleRate: number   = 44100,
-        title: string   = 'Title Unavailable',
-        artist: string   = 'Unknown Artist',
-        album: string   = 'Unknown Album',
-        genre: string[] = ['Unknown Genre'],
+        sampleRate = 44100,
+        title = 'Title Unavailable',
+        artist = 'Unknown Artist',
+        album = 'Unknown Album',
+        genre: string[] = ['Unknown Genre']
     ) {
         this.identifier = identifier;
         this.duration = duration;

@@ -4,7 +4,7 @@ jest.mock('fluent-ffmpeg');
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
 import AudioFactory from '../../AudioFactory';
-import Song from '../../../../Song';
+import Song from '../../../Song';
 
 describe('Disk factory', (): void => {
     let diskFactory: AudioFactory;
@@ -56,7 +56,7 @@ describe('Disk factory', (): void => {
                 cb('unable to find file on disk');
             });
 
-        try{
+        try {
             await diskFactory.getSong('no.wav');
         } catch (error) {
             expect(error).toMatch('unable to find file on disk');
