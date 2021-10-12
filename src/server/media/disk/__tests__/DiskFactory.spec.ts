@@ -1,41 +1,54 @@
-const ffmpeg = require('fluent-ffmpeg');
-jest.mock('fluent-ffmpeg');
-
+import { FfprobeData } from 'fluent-ffmpeg';
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
 import AudioFactory from '../../AudioFactory';
 import Song from '../../../Song';
 
+jest.mock('fluent-ffmpeg');
+
+type ProbeData = {
+    streams: FfprobeData['streams'],
+    chapters: FfprobeData['chapters'],
+    format: {
+        duration: FfprobeData['format']['duration'],
+        tags: Record<string, string>
+    }
+};
+
 describe('Disk factory', (): void => {
     let diskFactory: AudioFactory;
+    let ffprobe;
 
     beforeEach((): void => {
         diskFactory = new DiskFactory({
             songs_directory: 'C:\\some\\random\\directory',
         }, new DiskSource());
+        ffprobe = jest.mock('fluent-ffmpeg',
+            () => jest.genMockFromModule('fluent-ffmpeg'));
     });
 
-    it('provides correctly constructed songs', async (): Promise<any> => {
-        expect.assertions(8);
-
-        jest.spyOn(ffmpeg, 'ffprobe')
-            .mockImplementationOnce((path: string, cb: Function): void => {
-                cb(null, {
-                    format: {
-                        tags: {
-                            title: 'Test Title',
-                            artist: 'My Artist',
-                            album: 'My Album',
-                            genre: 'Example Genre',
-                        },
+    it('provides correctly constructed songs', async (): Promise<void> => {
+        ffprobe.mockImplementationOnce((
+            _path: string,
+            cb: (err: any, data?: FfprobeData) => void
+        ) => {
+            cb(null, {
+                format: {
+                    duration: 200,
+                    tags: {
+                        title: 'Test Title',
+                        artist: 'My Artist',
+                        album: 'My Album',
+                        genre: 'Example Genre',
                     },
-                    streams: [
-                        {
-                            duration: 200,
-                        },
-                    ],
-                });
+                },
+                streams: [{
+                    index: 0,
+                    sample_rate: 44100,
+                }],
+                chapters: [],
             });
+        });
         const song = await diskFactory.getSong('songexists.mp3');
 
         expect(song).toBeInstanceOf(Song);
@@ -48,11 +61,14 @@ describe('Disk factory', (): void => {
         expect(song).toHaveProperty('genre', ['Example Genre']);
     });
 
-    it('reports errors when trying to find an invalid song on disk', async (): Promise<any> => {
+    it('reports errors when trying to find an invalid song on disk', async (): Promise<void> => {
         expect.assertions(1);
 
-        jest.spyOn(ffmpeg, 'ffprobe')
-            .mockImplementationOnce((path: string, cb: Function): void => {
+        ffprobe
+            .mockImplementationOnce((
+                _path: string,
+                cb: (err: any, data?: ProbeData) => void
+            ) => {
                 cb('unable to find file on disk');
             });
 
