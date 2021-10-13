@@ -1,8 +1,17 @@
 import { Module } from '@nestjs/common';
-import ffmpeg, { ffprobe } from 'fluent-ffmpeg';
+import ffmpeg, { FfprobeData } from 'fluent-ffmpeg';
 import { path as ffmpegPath } from '@ffmpeg-installer/ffmpeg';
 import { path as ffProbePath } from '@ffprobe-installer/ffprobe';
 import { promisify } from 'util';
+
+export interface FFProbe {
+    (file: string): Promise<FfprobeData>;
+    (file: string, index: number): Promise<FfprobeData>;
+    (file: string, options: string[]): Promise<FfprobeData>;
+    (file: string, index: number, options: string[]): Promise<FfprobeData>;
+}
+
+const ffprobe = promisify(ffmpeg.ffprobe) as FFProbe;
 
 export enum SCANNER {
     FFMPEG = 'FFMPEG',
@@ -15,21 +24,21 @@ export enum SCANNER {
     providers: [
         {
             provide: SCANNER.FFMPEG,
-            useValue: promisify(ffmpeg),
+            useValue: ffmpeg,
         },
         {
             provide: SCANNER.FFPROBE,
-            useValue: promisify(ffprobe),
+            useValue: ffprobe,
         },
     ],
     exports: [
         {
             provide: SCANNER.FFMPEG,
-            useValue: promisify(ffmpeg),
+            useValue: ffmpeg,
         },
         {
             provide: SCANNER.FFPROBE,
-            useValue: promisify(ffprobe),
+            useValue: ffprobe,
         },
     ],
 })
