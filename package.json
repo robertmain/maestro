@@ -21,6 +21,8 @@
     "url": "git@github.com:robertmain/jukebox.git"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.2.0",
     "@nestjs/common": "^8.0.11",
     "@nestjs/core": "^8.0.11",
     "@nestjs/platform-express": "^8.0.11",
@@ -78,5 +80,5 @@
   },
   "engines": {
     "node": ">=8.9.0"
-  },
+  }
 }

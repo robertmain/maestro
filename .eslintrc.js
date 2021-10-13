@@ -20,6 +20,8 @@ module.exports = {
     ],
     rules: {
         '@typescript-eslint/indent': ['error', 4],
+        '@typescript-eslint/no-shadow': 'error',
+        'no-shadow': 'off',
         'no-extra-semi': 'off',
         'no-unused-vars': 'off',
         semi: 'off',
