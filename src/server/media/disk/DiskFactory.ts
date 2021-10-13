@@ -71,13 +71,16 @@ export default class DiskFactory implements AudioFactory {
         } = await probe(fullPath) as FfprobeData;
         return new Song(
             filePath,
-            duration,
             this._diskSource,
-            sampleRate,
-            title,
-            artist,
-            album,
-            (typeof genre === 'undefined') ? undefined : genre.split(';')
+            {
+                duration,
+                sampleRate,
+                title,
+                artist,
+                album,
+                genre: typeof genre === 'undefined'
+                    ? undefined : genre.split(';'),
+            }
         );
     }
 }
