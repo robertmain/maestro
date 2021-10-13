@@ -1,46 +1,39 @@
 /**
  * @hidden
  */
-import { sep } from 'path';
-
-import { Injectable, Module } from '@nestjs/common';
-import ffmpeg, { FfprobeData } from 'fluent-ffmpeg';
-import { promisify } from 'util';
+import { resolve } from 'path';
+import { Inject, Injectable } from '@nestjs/common';
+import { FFProbe, SCANNER } from 'server/ffmpeg/ffmpeg.module';
 import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
 import Song from '../../Song';
-import { config } from '../../config';
+import { DiskFactoryConfiguration } from '../types';
 
-const probe = promisify(ffmpeg.ffprobe);
-
-/**
- * Instanciates [[Song]]s using audio from the filesytem and provides the file system strategy for audio and metadata
- * retrieval
- */
-@Module({
-    providers: [DiskSource, Song],
-})
 @Injectable()
 export default class DiskFactory implements AudioFactory {
-    private readonly _config: any;
+    private readonly _config: DiskFactoryConfiguration;
 
-    private readonly _diskSource: DiskSource;
+    private _diskSource: DiskSource;
+
+    private probe: FFProbe;
 
     /**
      * Create a new song factory instance that produces songs for files on the local filesystem
 
-     * @param {*}          _config      The contents of [[config.adapters.disk]]
-     * @param {DiskSource} _diskSource An implementation of [[AudioSource]] used to generate an audio stream for audio
-     *                                  from the local disk
+     * @param {DiskFactoryConfiguration} config A configuration object that provides the settings for this factory. In this case, just the library loction
+     * @param {DiskSource} diskSource An implementation of [[AudioSource]] used to generate an audio stream for audio from the local disk
+     * @param {FFProbe} probe An instance of ffprobe for reading file metadata
      *
      * @memberof DiskFactory
      */
     public constructor(
-        _config: any,
-        _diskSource: DiskSource
+    @Inject(DiskFactoryConfiguration) config: DiskFactoryConfiguration,
+        @Inject(DiskSource) diskSource: DiskSource,
+        @Inject(SCANNER.FFPROBE) probe: FFProbe
     ) {
         this._config = config;
-        this._diskSource = _diskSource;
+        this._diskSource = diskSource;
+        this.probe = probe;
     }
 
     /**
@@ -54,7 +47,7 @@ export default class DiskFactory implements AudioFactory {
      * @memberof DiskFactory
      */
     public async getSong(filePath: string): Promise<Song> {
-        const fullPath = this._config.songsDirectory + sep + filePath;
+        const fullPath = resolve(this._config.libraryDirectory, filePath);
         const {
             streams: [{
                 sample_rate: sampleRate,
@@ -68,7 +61,8 @@ export default class DiskFactory implements AudioFactory {
                     genre,
                 },
             },
-        } = await probe(fullPath) as FfprobeData;
+        } = await this.probe(fullPath);
+
         return new Song(
             filePath,
             this._diskSource,

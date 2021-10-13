@@ -1,3 +1,8 @@
+/* eslint-disable max-classes-per-file */
+export class DiskFactoryConfiguration {
+    libraryDirectory: string;
+}
+
 /**
  *
  * Initialize a song object to be passeda around the application
