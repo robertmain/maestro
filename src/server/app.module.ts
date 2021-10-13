@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FfmpegModule } from './ffmpeg/Ffmpeg.module';
+import { FfmpegModule } from './ffmpeg/ffmpeg.module';
 
 @Module({
     imports: [
