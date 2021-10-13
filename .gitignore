@@ -2,6 +2,7 @@
 coverage/
 .vscode/
 .vs/
+.sass-cache/
 node_modules/
 .env
 dist
