@@ -11,30 +11,14 @@ import { DiskFactoryConfiguration } from '../types';
 
 @Injectable()
 export default class DiskFactory implements AudioFactory {
+    @Inject(DiskFactoryConfiguration)
     private readonly _config: DiskFactoryConfiguration;
 
-    private _diskSource: DiskSource;
+    @Inject(DiskSource)
+    private diskSource: DiskSource;
 
+    @Inject(SCANNER.FFPROBE)
     private probe: FFProbe;
-
-    /**
-     * Create a new song factory instance that produces songs for files on the local filesystem
-
-     * @param {DiskFactoryConfiguration} config A configuration object that provides the settings for this factory. In this case, just the library loction
-     * @param {DiskSource} diskSource An implementation of [[AudioSource]] used to generate an audio stream for audio from the local disk
-     * @param {FFProbe} probe An instance of ffprobe for reading file metadata
-     *
-     * @memberof DiskFactory
-     */
-    public constructor(
-    @Inject(DiskFactoryConfiguration) config: DiskFactoryConfiguration,
-        @Inject(DiskSource) diskSource: DiskSource,
-        @Inject(SCANNER.FFPROBE) probe: FFProbe
-    ) {
-        this._config = config;
-        this._diskSource = diskSource;
-        this.probe = probe;
-    }
 
     /**
      * Instanciates a [[Song]] for you with the correct metadata and audio retrieval strategy bound. This implementation
@@ -65,7 +49,7 @@ export default class DiskFactory implements AudioFactory {
 
         return new Song(
             filePath,
-            this._diskSource,
+            this.diskSource,
             {
                 duration,
                 sampleRate,
