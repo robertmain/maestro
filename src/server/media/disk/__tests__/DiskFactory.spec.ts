@@ -1,14 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SCANNER } from 'server/ffmpeg/ffmpeg.module';
-import { ConfigService } from '@nestjs/config';
 import { DiskFactoryConfiguration } from 'server/media/types';
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
 import Song from '../../../Song';
-
-const fakeConfigService = {
-    get: jest.fn(),
-};
 
 describe('Disk factory', (): void => {
     let diskFactory: DiskFactory;
@@ -24,10 +19,6 @@ describe('Disk factory', (): void => {
                     useValue: {
                         libraryDirectory: '',
                     } as DiskFactoryConfiguration,
-                },
-                {
-                    provide: ConfigService,
-                    useValue: fakeConfigService,
                 },
                 {
                     provide: SCANNER.FFPROBE,
