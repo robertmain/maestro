@@ -1,7 +1,7 @@
 import { IMock, Mock, Times } from 'typemoq';
 import { Readable } from 'stream';
 
-import Song from '../Song';
+import Song from '../media/Song';
 import AudioSource from '../media/AudioSource';
 
 describe('A song', (): void => {

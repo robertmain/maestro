@@ -6,7 +6,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { FFProbe, SCANNER } from 'server/ffmpeg/ffmpeg.module';
 import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
-import Song from '../../Song';
+import Song from '../Song';
 import { LIBRARY_URL } from '../types';
 
 @Injectable()

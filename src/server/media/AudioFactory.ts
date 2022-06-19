@@ -1,4 +1,4 @@
-import Song from '../Song';
+import Song from './Song';
 
 /**
  * An abstraction of a [[Song]] factory. Implementations of this interface must instanciate songs in such a way as

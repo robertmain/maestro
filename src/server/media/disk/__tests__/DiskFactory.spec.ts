@@ -3,7 +3,7 @@ import { SCANNER } from 'server/ffmpeg/ffmpeg.module';
 import { LIBRARY_URL } from 'server/media/types';
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
-import Song from '../../../Song';
+import Song from '../../Song';
 
 describe('Disk factory', (): void => {
     let diskFactory: DiskFactory;

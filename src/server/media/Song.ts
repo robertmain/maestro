@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 import { Injectable } from '@nestjs/common';
-import AudioSource from './media/AudioSource';
-import { SongMetaData } from './media/types';
+import AudioSource from './AudioSource';
+import { SongMetaData } from './types';
 
 /**
  * Provides an encapsulation layer for both song metadata and the audio stream of a given song.
