@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MediaModule } from './media/media.module';
-import { FfmpegModule } from './ffmpeg/ffmpeg.module';
 
 @Module({
     imports: [
@@ -10,7 +9,6 @@ import { FfmpegModule } from './ffmpeg/ffmpeg.module';
             cache: false,
             isGlobal: true,
         }),
-        FfmpegModule,
         MediaModule,
     ],
     controllers: [],
