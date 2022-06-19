@@ -14,6 +14,7 @@ describe('Disk factory', (): void => {
     let diskFactory: DiskFactory;
     let fakeFfProbe;
     beforeEach(async (): Promise<void> => {
+        fakeFfProbe = jest.fn();
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 DiskSource,
@@ -30,7 +31,7 @@ describe('Disk factory', (): void => {
                 },
                 {
                     provide: SCANNER.FFPROBE,
-                    useValue: jest.fn(),
+                    useValue: fakeFfProbe,
                 },
             ],
             controllers: [],
@@ -38,7 +39,6 @@ describe('Disk factory', (): void => {
             .compile();
 
         diskFactory = module.get<DiskFactory>(DiskFactory);
-        fakeFfProbe = module.get<SCANNER.FFPROBE>(SCANNER.FFPROBE);
     });
 
     it('provides correctly constructed songs', async (): Promise<void> => {
