@@ -11,7 +11,7 @@ export interface FFProbe {
     (file: string, index: number, options: string[]): Promise<FfprobeData>;
 }
 
-const ffprobe = promisify(ffmpeg.ffprobe) as FFProbe;
+const ffprobe: FFProbe = promisify(ffmpeg.ffprobe);
 
 export enum SCANNER {
     FFMPEG = 'FFMPEG',
