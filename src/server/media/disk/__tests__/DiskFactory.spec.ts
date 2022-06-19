@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SCANNER } from 'server/ffmpeg/ffmpeg.module';
-import { DiskFactoryConfiguration } from 'server/media/types';
+import { LIBRARY_URL } from 'server/media/types';
 import DiskFactory from '../DiskFactory';
 import DiskSource from '../DiskSource';
 import Song from '../../../Song';
@@ -15,10 +15,8 @@ describe('Disk factory', (): void => {
                 DiskSource,
                 DiskFactory,
                 {
-                    provide: DiskFactoryConfiguration,
-                    useValue: {
-                        libraryDirectory: '',
-                    } as DiskFactoryConfiguration,
+                    provide: LIBRARY_URL,
+                    useValue: '',
                 },
                 {
                     provide: SCANNER.FFPROBE,

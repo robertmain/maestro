@@ -7,12 +7,12 @@ import { FFProbe, SCANNER } from 'server/ffmpeg/ffmpeg.module';
 import AudioFactory from '../AudioFactory';
 import DiskSource from './DiskSource';
 import Song from '../../Song';
-import { DiskFactoryConfiguration } from '../types';
+import { LIBRARY_URL } from '../types';
 
 @Injectable()
 export default class DiskFactory implements AudioFactory {
-    @Inject(DiskFactoryConfiguration)
-    private readonly _config: DiskFactoryConfiguration;
+    @Inject(LIBRARY_URL)
+    private library = '';
 
     @Inject(DiskSource)
     private diskSource: DiskSource;
@@ -31,7 +31,7 @@ export default class DiskFactory implements AudioFactory {
      * @memberof DiskFactory
      */
     public async getSong(filePath: string): Promise<Song> {
-        const fullPath = resolve(this._config.libraryDirectory, filePath);
+        const fullPath = resolve(this.library, filePath);
         const {
             streams: [{
                 sample_rate: sampleRate,

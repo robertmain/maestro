@@ -1,8 +1,3 @@
-/* eslint-disable max-classes-per-file */
-export class DiskFactoryConfiguration {
-    libraryDirectory: string;
-}
-
 /**
  *
  * Initialize a song object to be passeda around the application
@@ -32,3 +27,8 @@ export interface SongMetaData {
 
     genre?: string[];
 }
+
+/**
+ * Token used to inject the music library path into the DiskModule
+ */
+export const LIBRARY_URL = 'library_url';
