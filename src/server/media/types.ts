@@ -1,12 +1,5 @@
 /**
  *
- * Initialize a song object to be passeda around the application
- *
- * @example
- * ```ts
- * const s = new Song('song.mp3', 200, new DiskSource(), undefined, 'Graceland', 'Paul Simon', 'Graceland', ['Worldbeat']);
- * ```
- *
  * @param sampleRate  The sample rate of a song, this is usually safe to leave at 44100
  * @param title       The song title (song metadata - this is displayed to the user)
  * @param artist      The song artist (song metadata - this is displayed to the user)
