@@ -32,14 +32,8 @@ export enum SCANNER {
         },
     ],
     exports: [
-        {
-            provide: SCANNER.FFMPEG,
-            useValue: ffmpeg,
-        },
-        {
-            provide: SCANNER.FFPROBE,
-            useValue: ffprobe,
-        },
+        SCANNER.FFMPEG,
+        SCANNER.FFPROBE,
     ],
 })
 export class FfmpegModule {
