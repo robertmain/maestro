@@ -1,13 +1,18 @@
 import { Global, Module } from '@nestjs/common';
-import { STORE } from './types';
-import { store } from './store';
+import { configureStore } from '@reduxjs/toolkit';
+import playlist from './playlist.slice';
 
+export const STORE = 'STORE';
 @Global()
 @Module({
     providers: [
         {
             provide: STORE,
-            useValue: store,
+            useValue: configureStore({
+                reducer: {
+                    playlist,
+                },
+            }),
         },
     ],
     exports: [
