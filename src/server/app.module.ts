@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ZeroConfModule } from './zeroconf/zeroconf.module';
 import { MediaModule } from './media/media.module';
+import { State } from './state/state.module';
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import { MediaModule } from './media/media.module';
         }),
         MediaModule,
         ZeroConfModule,
+        State,
     ],
     controllers: [],
     providers: [],
