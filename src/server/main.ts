@@ -1,7 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 import { AppModule } from './app.module';
+
+global.AbortController = AbortController;
 
 const { PORT, NODE_ENV } = process.env;
 

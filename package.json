@@ -30,6 +30,7 @@
     "@nestjs/swagger": "^5.1.0",
     "@nestjs/terminus": "^8.0.1",
     "@reduxjs/toolkit": "^1.8.2",
+    "abortcontroller-polyfill": "^1.7.3",
     "axios": "^0.22.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
