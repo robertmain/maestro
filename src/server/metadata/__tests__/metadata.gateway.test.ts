@@ -3,8 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import Io, { Socket } from 'socket.io-client';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { SongMetaData } from 'server/media/types';
-import { STORE } from 'server/state/state.module';
-import { MetadataModule } from '../metadata.module';
 import { PLAYLIST_EVENT_TYPES } from '../metadata.gateway';
 
 describe('Metadata websocket gateway', () => {

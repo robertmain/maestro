@@ -4,9 +4,9 @@ import {
 } from '@nestjs/websockets';
 import { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { Subject } from 'rxjs';
-import { LISTENER_MIDDLEWARE } from 'server/state/state.module';
 import { Socket } from 'socket.io';
-import { addToPlaylist } from '../state/playlist.slice';
+import { LISTENER_MIDDLEWARE } from './metadata.module';
+import { addToPlaylist } from './playlist.slice';
 
 type PlaylistEvent = {
     type: string;
