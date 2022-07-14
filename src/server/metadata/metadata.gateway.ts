@@ -2,44 +2,41 @@ import { Inject } from '@nestjs/common';
 import {
     OnGatewayConnection, WebSocketGateway,
 } from '@nestjs/websockets';
-import { Store } from 'redux';
+import { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { Subject } from 'rxjs';
-import { SongMetaData } from 'server/media/types';
-import { STORE } from 'server/state/state.module';
+import { LISTENER_MIDDLEWARE } from 'server/state/state.module';
 import { Socket } from 'socket.io';
-import playlistReducer from '../state/playlist.slice';
-
-export enum PLAYLIST_EVENT_TYPES {
-    PLAYLIST_GET = 'PLAYLIST_GET',
-}
+import { addToPlaylist } from '../state/playlist.slice';
 
 type PlaylistEvent = {
-    type: PLAYLIST_EVENT_TYPES;
-    data: unknown;
+    type: string;
+    data?: unknown;
 };
 
 @WebSocketGateway()
 export class MetadataGateway implements OnGatewayConnection {
-    @Inject(STORE)
-    private store: Store<SongMetaData[]>;
-
-    private subject: Subject<PlaylistEvent>;
-
-    public constructor() {
-        this.subject = new Subject<PlaylistEvent>();
-    }
-
-    // handleDisconnect(client: Socket): void {
-    //     this.subject.complete();
-    // }
+    @Inject(LISTENER_MIDDLEWARE)
+    private listenerMiddleware: ListenerMiddlewareInstance;
 
     handleConnection(client: Socket): void {
-        const subscription = this.subject
-            .subscribe({
-                next: ({ type, data }) => client.emit(type, data),
+        const playlist = new Subject<PlaylistEvent>();
+        playlist.subscribe({
+            next: ({ type, data }) => client.emit(type, data),
+        });
+        const unsubscribeListeners = [
+            addToPlaylist,
+        ].map((actionCreator) => this.listenerMiddleware.startListening({
+            actionCreator,
+            effect: ({ type, payload }) => {
+                const eventType = type.toUpperCase().replace('/', '_');
+                playlist.next({ type: eventType, data: payload });
+            },
+        }));
+        client.on('disconnect', () => {
+            playlist.unsubscribe();
+            unsubscribeListeners.forEach((unsubscribe) => {
+                unsubscribe();
             });
-
-        client.emit(PLAYLIST_EVENT_TYPES.PLAYLIST_GET, this.store.getState());
-        client.on('disconnect', () => subscription.unsubscribe());
+        });
     }
 }
