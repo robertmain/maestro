@@ -13,12 +13,12 @@ import { LISTENER_MIDDLEWARE, STORE } from './types';
         {
             provide: STORE,
             inject: [LISTENER_MIDDLEWARE],
-            useFactory: (middleware) => configureStore({
+            useFactory: ({ middleware }) => configureStore({
                 reducer: {
                     playlist,
                 },
                 middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-                    .prepend(middleware.middleware),
+                    .prepend(middleware),
             }),
         },
         MetadataGateway,
