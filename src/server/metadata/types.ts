@@ -1,0 +1,2 @@
+export const STORE = 'STORE';
+export const LISTENER_MIDDLEWARE = 'LISTENER_MIDDLEWARE';

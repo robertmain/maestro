@@ -2,9 +2,7 @@ import { Module } from '@nestjs/common';
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import { MetadataGateway } from './metadata.gateway';
 import playlist from './playlist.slice';
-
-export const STORE = 'STORE';
-export const LISTENER_MIDDLEWARE = 'LISTENER_MIDDLEWARE';
+import { LISTENER_MIDDLEWARE, STORE } from './types';
 
 @Module({
     providers: [

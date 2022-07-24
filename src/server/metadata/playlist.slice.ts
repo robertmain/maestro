@@ -26,4 +26,4 @@ export const playlist = createSlice({
 });
 
 export default playlist.reducer;
-export const { addToPlaylist } = playlist.actions;
+export const { actions } = playlist;

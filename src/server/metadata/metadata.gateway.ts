@@ -5,8 +5,8 @@ import {
 import { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { Subject } from 'rxjs';
 import { Socket } from 'socket.io';
-import { LISTENER_MIDDLEWARE } from './metadata.module';
 import { addToPlaylist } from './playlist.slice';
+import { LISTENER_MIDDLEWARE, STORE } from './types';
 
 type PlaylistEvent = {
     type: string;
