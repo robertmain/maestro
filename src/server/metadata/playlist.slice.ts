@@ -17,10 +17,10 @@ export const playlist = createSlice({
     name: 'playlist',
     initialState: [] as SongMetadataWithId[],
     reducers: {
-        addToPlaylist: (state, action: PayloadAction<SongMetaData>) => {
+        add: (state, { payload }: PayloadAction<SongMetaData>) => {
             state.push({
                 ...defaults,
-                ...action.payload,
+                ...payload,
                 identifier: nanoid(),
             });
         },
