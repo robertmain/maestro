@@ -31,7 +31,12 @@ describe('Playlist websocket gateway', () => {
 
         await app.init();
         const { address, port } = app.getHttpServer().listen().address();
-        socket = io(`http://[${address}]:${port}`).connect();
+        socket = await ((url) => new Promise<Socket>((res) => {
+            const connection = io(url);
+            connection.on('connect', () => {
+                res(connection);
+            });
+        }))(`http://[${address}]:${port}`);
         store = module.get<Store<SongMetadataWithId>>(STORE);
     });
     afterEach(async () => {
