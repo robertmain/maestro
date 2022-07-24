@@ -1,9 +1,10 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
     OnGatewayConnection, WebSocketGateway,
 } from '@nestjs/websockets';
-import { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
+import { ListenerMiddlewareInstance, Store } from '@reduxjs/toolkit';
 import { Subject } from 'rxjs';
+import { SongMetaData, SongMetadataWithId } from 'server/media/types';
 import { Socket } from 'socket.io';
 import { addToPlaylist } from './playlist.slice';
 import { LISTENER_MIDDLEWARE, STORE } from './types';
@@ -14,9 +15,21 @@ type PlaylistEvent = {
 };
 
 @WebSocketGateway()
+@Injectable()
 export class MetadataGateway implements OnGatewayConnection {
+    private listenerMiddleware: ListenerMiddlewareInstance<SongMetadataWithId>;
+
+    private store: Store<SongMetadataWithId>;
+
+    public constructor(
     @Inject(LISTENER_MIDDLEWARE)
-    private listenerMiddleware: ListenerMiddlewareInstance;
+        middleware: ListenerMiddlewareInstance<SongMetaData>,
+        @Inject(STORE)
+        store: Store<SongMetadataWithId>
+    ) {
+        this.listenerMiddleware = middleware;
+        this.store = store;
+    }
 
     handleConnection(client: Socket): void {
         const playlist = new Subject<PlaylistEvent>();

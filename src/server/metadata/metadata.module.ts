@@ -23,6 +23,9 @@ import { LISTENER_MIDDLEWARE, STORE } from './types';
         },
         MetadataGateway,
     ],
-    exports: [],
+    exports: [
+        LISTENER_MIDDLEWARE,
+        STORE,
+    ],
 })
 export class MetadataModule { }
