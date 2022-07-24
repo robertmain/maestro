@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SongMetaData } from 'server/media/types';
+import { SongMetaData, SongMetadataWithId } from 'server/media/types';
+import { nanoid } from 'nanoid';
 
 /**
  * Default values
@@ -14,12 +15,13 @@ export const defaults: Omit<SongMetaData, 'duration'> = {
 
 export const playlist = createSlice({
     name: 'playlist',
-    initialState: [] as SongMetaData[],
+    initialState: [] as SongMetadataWithId[],
     reducers: {
         addToPlaylist: (state, action: PayloadAction<SongMetaData>) => {
             state.push({
                 ...defaults,
                 ...action.payload,
+                identifier: nanoid(),
             });
         },
     },

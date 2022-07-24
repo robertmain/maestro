@@ -19,6 +19,8 @@ export interface SongMetaData {
     genre?: string[];
 }
 
+export type SongMetadataWithId = { identifier: string } & SongMetaData;
+
 /**
  * Token used to inject the music library path into the DiskModule
  */
