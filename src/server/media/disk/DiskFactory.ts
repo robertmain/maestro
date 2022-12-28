@@ -53,11 +53,11 @@ export default class DiskFactory implements AudioFactory {
             {
                 duration,
                 sampleRate,
-                title,
-                artist,
-                album,
+                title: title.toString(),
+                artist: artist.toString(),
+                album: album.toString(),
                 genre: typeof genre === 'undefined'
-                    ? undefined : genre.split(';'),
+                    ? undefined : genre.toString().split(';'),
             }
         );
     }
