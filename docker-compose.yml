@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   node:
+    network_mode: host
     build:
       context: .
       target: base
