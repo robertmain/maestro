@@ -1,23 +1,28 @@
+/* eslint-disable import/first */
+jest.mock('fs', () => ({
+    existsSync: jest.fn(),
+    createReadStream: jest.fn(),
+}));
+import * as fs from 'fs';
 import { Readable } from 'stream';
-import { mocked } from 'ts-jest/utils';
-import fs from 'fs';
-import { MockedObjectDeep } from 'ts-jest/dist/utils/testing';
 import DiskSource from '../DiskSource';
 
-jest.mock('fs');
 describe('Disk source', (): void => {
     let diskSource: DiskSource;
-    let mockFs: MockedObjectDeep<typeof fs>;
+    let existsSyncSpy: jest.SpyInstance<boolean, [path: fs.PathLike]>;
+    let createReadStreamSpy: jest.SpyInstance<ReturnType<typeof fs['createReadStream']>>;
     beforeEach(() => {
-        mockFs = mocked(fs, true);
+        existsSyncSpy = jest.spyOn(fs, 'existsSync');
+        createReadStreamSpy = jest.spyOn(fs, 'createReadStream');
         diskSource = new DiskSource();
     });
+    afterEach(jest.clearAllMocks);
     it('is able to retrieve song files from disk', (): void => {
         expect.assertions(1);
-        mockFs.existsSync.mockImplementationOnce(() => true);
-        mockFs.createReadStream
+        existsSyncSpy.mockReturnValue(true);
+        createReadStreamSpy
             .mockImplementationOnce(jest.fn()
-                .mockImplementationOnce(() => Readable.from([])));
+                .mockReturnValue(Readable.from([])));
 
         const audio = diskSource.getAudio('mysong.mp3');
 
@@ -25,7 +30,7 @@ describe('Disk source', (): void => {
     });
 
     it('fails to find non-existant files', (): void => {
-        mockFs.existsSync.mockImplementationOnce(() => false);
+        existsSyncSpy.mockReturnValue(false);
         expect(() => {
             diskSource.getAudio('no.wav');
         }).toThrow(/no such file or directory/i);
